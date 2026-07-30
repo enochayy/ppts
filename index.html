@@ -432,6 +432,20 @@ h4,.h4{font-size:22px;line-height:1.3;font-weight:600;margin:0 0 8px}
 .data-placeholder { display: inline-block; background: color-mix(in srgb, var(--accent) 10%, transparent); border: 1px dashed var(--accent); color: var(--accent); padding: 2px 10px; border-radius: 2px; font-size: 13px; font-style: normal; font-family: var(--font-sans); }
 .closing-word { font-family: var(--font-sans); font-size: 96px; font-style: italic; font-weight: 700; color: var(--text-1); line-height: 1; letter-spacing: -.03em; }
 
+/* ── 千帆四榜卡片 ── */
+.rank-card { padding: 18px 20px; }
+.rank-card .kicker { margin-bottom: 6px !important; }
+.rank-card .rank-num { font-family: var(--font-sans); font-size: 26px; font-weight: 700; color: var(--accent); line-height: 1; }
+.rank-track { position: relative; height: 5px; background: var(--surface-2); border-radius: 3px; margin: 10px 0 6px; }
+.rank-fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--accent); border-radius: 3px; opacity: .35; }
+.rank-dot { position: absolute; top: 50%; width: 9px; height: 9px; background: var(--accent); border: 2px solid var(--surface); border-radius: 50%; transform: translate(-50%,-50%); }
+.rank-axis { display: flex; justify-content: space-between; font-size: 9px; color: var(--text-3); letter-spacing: .04em; }
+.rank-neighbors { list-style: none; margin-top: 8px; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+.rank-neighbors li { display: flex; gap: 8px; font-size: 11px; color: var(--text-3); align-items: baseline; }
+.rank-neighbors li .rk { font-weight: 700; min-width: 26px; color: var(--text-3); }
+.rank-neighbors li.is-slemon { color: var(--text-1); font-weight: 700; }
+.rank-neighbors li.is-slemon .rk { color: var(--accent); }
+.rank-neighbors li.is-missing { color: var(--faint, var(--text-3)); font-style: italic; }
 
 /* ── 第5页内嵌图表 ── */
 .slide-chart-wrap { width:100%; margin-top:8px; }
@@ -611,6 +625,9 @@ h1, h2, .h1, .h2 {
   font-size: 16px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center;
 }
 .data-modal-close:hover { background: var(--border); color: var(--text-1); }
+.img-modal .data-modal { width: auto; max-width: 92vw; padding: 0; background: transparent; box-shadow: none; }
+.img-modal .data-modal img { display: block; max-width: 100%; max-height: 84vh; border-radius: var(--radius); box-shadow: var(--shadow-lg); }
+.img-modal .data-modal-close { top: -14px; right: -14px; background: var(--surface); box-shadow: var(--shadow-lg); }
 
 
 
@@ -700,7 +717,7 @@ h1, h2, .h1, .h2 {
       <span style="font-size:12px;color:var(--text-2);font-family:var(--font-sans);padding:4px 12px;border:1px solid var(--border);border-radius:2px">③ 供应商业务协调（老板层推动）</span>
     </div>
   </div>
-  <div class="deck-footer"><span>← → 键翻页</span><span class="slide-number" data-current="1" data-total="11"></span></div>
+  <div class="deck-footer"><span>← → 键翻页</span><span class="slide-number" data-current="1" data-total="12"></span></div>
   <div class="notes">封面页。</div>
 </section>
 
@@ -724,7 +741,7 @@ h1, h2, .h1, .h2 {
   <p class="dim" style="font-size:12px;line-height:1.6;margin-top:14px">
     补充说明：目前 ROI≈2 是健康水位——订单全部来自真实转化，不是<span class="tooltip-word" data-tip="淘宝平台对刷单的处罚非常重：轻则删除虚假交易与评价、搜索权重暗降30天；一般违规处5000元罚款；情节严重处20000元罚款并扣4分；特别严重处50000元罚款、扣24分、店铺关店7天，多次严重违规将被永久清退。刷出来的ROI经不起复查，一次处罚就可能让前期投入全部清零。最重要是识别出来刷单后会在模型上打上半永久标签。">刷单堆出来的虚假繁荣 ↗</span>。电商的底层公式是<span class="tooltip-word conv-rate-trigger" data-tip="销售额=访客数×转化率×客单价。转化率不是越砸钱越高——真实数据显示流量放大后往往被稀释走低。点击查看详情 →">访客 × 转化率 = 订单 ↗</span>：我们先用小流量测出真正有转化能力的款和图，确认有效后再加大投流放大访客，账号权重和订单才会一起起来——而不是盯着转化率不到1%的品硬投，钱越花越多，换来的只是被放大的假象。
   </p>
-  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="2" data-total="11"></span></div>
+  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="2" data-total="12"></span></div>
   <div class="notes">数据说话。</div>
 </section>
 
@@ -752,7 +769,7 @@ h1, h2, .h1, .h2 {
     </div>
   </div>
   <p class="dim mt-l" style="font-size:13px">* 万单店是品牌心智开始沉淀的真正起点——在这之前，一切都是热身。</p>
-  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="3" data-total="11"></span></div>
+  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="3" data-total="12"></span></div>
   <div class="notes">三阶段路径。</div>
 </section>
 
@@ -774,7 +791,7 @@ h1, h2, .h1, .h2 {
     </div>
   </div>
   <p class="dim mt-l" style="font-size:13px">两类产品共存，互相扶持：<span class="tooltip-word" data-tip="引流款是店铺的流量入口，其核心价值不在于利润，而在于以低价或高性价比吸引潜在客户进店浏览。一旦去掉引流款，店铺人流量骤降，利润款也将失去曝光机会。行业经验：电商店铺通常配置3-5个引流款，占店内SKU约10%，活动期间比重可适当提高。（来源：有赞电商运营方法论）">流量款负责拉人进门 ↗</span>，利润款负责让账号赚钱。</p>
-  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="4" data-total="11"></span></div>
+  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="4" data-total="12"></span></div>
   <div class="notes">产品矩阵逻辑。</div>
 </section>
 
@@ -825,8 +842,87 @@ h1, h2, .h1, .h2 {
     </p>
   </div>
 
-  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="5" data-total="11"></span></div>
+  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="5" data-total="12"></span></div>
   <div class="notes">旺季即将到来，蓄水已经在做。但产品供给是当前最大的卡点，且丹诗戈款存在比价流失与利润天花板问题，需要尽快解决。</div>
+</section>
+
+<!-- 5.5 千帆四榜实证 -->
+<section class="slide" data-title="千帆榜单">
+  <div class="deck-header"><span>SLÉMON · 小红书个人思考</span><span>千帆榜单</span></div>
+  <p class="kicker">04.5 · 数据佐证</p>
+  <h2 class="h2" style="font-size:34px">单日 45 单不是孤例，<br>千帆四榜同步被平台认可。</h2>
+  <p class="dim mt-m" style="font-size:13px;line-height:1.6">阅读榜、成交榜、热卖榜、引流榜同时上榜"优秀账号"，说明起量不是单点异常，而是内容、转化、流量三端同步跑通。<span class="dim2" style="font-size:11px">数据来源：小红书千帆平台 · 2026-07-27</span></p>
+
+  <div class="grid g2 mt-s" style="gap:12px">
+
+    <div class="card rank-card">
+      <p class="kicker" style="font-size:11px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">阅读榜 · 优秀账号 <span class="dashed-hint rank-shot-trigger" data-img="assets/rank-shots/read-rank.jpg" style="font-size:11px;text-transform:none;letter-spacing:normal;font-weight:500;color:var(--text-3)">原图 🖼</span></p>
+      <div class="row" style="gap:10px;align-items:baseline">
+        <span class="rank-num">#2</span>
+        <span class="pill pill-accent">领先全场</span>
+        <span class="dim2" style="font-size:11px;margin-left:auto">共 41 个账号</span>
+      </div>
+      <div class="rank-track"><div class="rank-fill" style="width:4.9%"></div><div class="rank-dot" style="left:4.9%"></div></div>
+      <div class="rank-axis"><span>#1</span><span>#41</span></div>
+      <ul class="rank-neighbors">
+        <li><span class="rk">#1</span><span>风舞芭蕾服饰</span></li>
+        <li class="is-slemon"><span class="rk">#2</span><span>Slemon</span></li>
+        <li><span class="rk">#3</span><span>Cilaminnie</span></li>
+      </ul>
+    </div>
+
+    <div class="card rank-card">
+      <p class="kicker" style="font-size:11px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">成交榜 · 优秀账号 <span class="dashed-hint rank-shot-trigger" data-img="assets/rank-shots/deal-rank.jpg" style="font-size:11px;text-transform:none;letter-spacing:normal;font-weight:500;color:var(--text-3)">原图 🖼</span></p>
+      <div class="row" style="gap:10px;align-items:baseline">
+        <span class="rank-num">#4</span>
+        <span class="pill pill-accent">转化稳健</span>
+        <span class="dim2" style="font-size:11px;margin-left:auto">共 40 个账号</span>
+      </div>
+      <div class="rank-track"><div class="rank-fill" style="width:10%"></div><div class="rank-dot" style="left:10%"></div></div>
+      <div class="rank-axis"><span>#1</span><span>#40</span></div>
+      <ul class="rank-neighbors">
+        <li><span class="rk">#3</span><span>House of Tutu</span></li>
+        <li class="is-slemon"><span class="rk">#4</span><span>Slemon</span></li>
+        <li><span class="rk">#5</span><span>以琳恬恬</span></li>
+      </ul>
+    </div>
+
+    <div class="card rank-card">
+      <p class="kicker" style="font-size:11px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">热卖榜 · 优秀账号 <span class="dashed-hint rank-shot-trigger" data-img="assets/rank-shots/hot-rank.jpg" style="font-size:11px;text-transform:none;letter-spacing:normal;font-weight:500;color:var(--text-3)">原图 🖼</span></p>
+      <div class="row" style="gap:10px;align-items:baseline">
+        <span class="rank-num">#10</span>
+        <span class="pill pill-accent">中段突围</span>
+        <span class="dim2" style="font-size:11px;margin-left:auto">共 40 个账号</span>
+      </div>
+      <div class="rank-track"><div class="rank-fill" style="width:25%"></div><div class="rank-dot" style="left:25%"></div></div>
+      <div class="rank-axis"><span>#1</span><span>#40</span></div>
+      <ul class="rank-neighbors">
+        <li><span class="rk">#9</span><span>风舞芭蕾服饰</span></li>
+        <li class="is-slemon"><span class="rk">#10</span><span>Slemon</span></li>
+        <li class="is-missing"><span class="rk">#11+</span><span>数据不可见</span></li>
+      </ul>
+    </div>
+
+    <div class="card rank-card">
+      <p class="kicker" style="font-size:11px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">引流榜 · 优秀账号 <span class="dashed-hint rank-shot-trigger" data-img="assets/rank-shots/flow-rank.jpg" style="font-size:11px;text-transform:none;letter-spacing:normal;font-weight:500;color:var(--text-3)">原图 🖼</span></p>
+      <div class="row" style="gap:10px;align-items:baseline">
+        <span class="rank-num">#19</span>
+        <span class="pill">仍有空间</span>
+        <span class="dim2" style="font-size:11px;margin-left:auto">共 41 个账号</span>
+      </div>
+      <div class="rank-track"><div class="rank-fill" style="width:46%"></div><div class="rank-dot" style="left:46%"></div></div>
+      <div class="rank-axis"><span>#1</span><span>#41</span></div>
+      <ul class="rank-neighbors">
+        <li class="is-missing"><span class="rk">#16-18</span><span>数据不可见</span></li>
+        <li class="is-slemon"><span class="rk">#19</span><span>Slemon</span></li>
+        <li class="is-missing"><span class="rk">#20-22</span><span>数据不可见</span></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="6" data-total="12"></span></div>
+  <div class="notes">千帆四榜排名，佐证单日45单峰值背后是阅读、成交、热卖三端同步优秀，引流榜排名靠后（#19/41）说明流量放大仍有空间，与"下一阶段目标是旺季冲量"的判断一致。</div>
 </section>
 
 <!-- 6. 用户洞察 -->
@@ -859,7 +955,7 @@ h1, h2, .h1, .h2 {
       </div>
     </div>
   </div>
-  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="6" data-total="11"></span></div>
+  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="7" data-total="12"></span></div>
   <div class="notes">颜色销售数据图表：棕色112件占50%，粉色61件，肉色42件。上线初期主推肉粉，棕色自然跑出后才换主图。</div>
 </section>
 
@@ -929,7 +1025,7 @@ h1, h2, .h1, .h2 {
       </div>
     </div>
   </div>
-  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="7" data-total="11"></span></div>
+  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="8" data-total="12"></span></div>
   <div class="notes">品牌定性。</div>
 </section>
 
@@ -986,7 +1082,7 @@ h1, h2, .h1, .h2 {
     </div>
   </div>
 
-  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="8" data-total="11"></span></div>
+  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="9" data-total="12"></span></div>
   <div class="notes">产品力不足是事实，但方向已经跑出来了。差异化配色是当前最具性价比的突破口，需要老板层面去推动供应链侧的配合。</div>
 </section>
 
@@ -1033,7 +1129,7 @@ h1, h2, .h1, .h2 {
     </div>
   </div>
 
-  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="9" data-total="11"></span></div>
+  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="10" data-total="12"></span></div>
   <div class="notes">假设情景推演路径：现有3款退货率约30%的服饰与差异色芭蕾鞋持续出单，旺季前蓄够基础销量、好评率、店铺权重，旺季按大盘3倍中间值1.5倍提升，单日约112单，日均破百；2-3年后品牌认知度与研发正反馈路线有望成型。</div>
 </section>
 
@@ -1059,7 +1155,7 @@ h1, h2, .h1, .h2 {
     </div>
   </div>
 
-  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="10" data-total="11"></span></div>
+  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="11" data-total="12"></span></div>
   <div class="notes">风险点：类目头部效应明显（对标奶茶、咖啡、新能源车），品牌力储备窗口期有限，存量小朋友转化断层与下一代新生儿数量断崖风险迫近。</div>
 </section>
 
@@ -1073,7 +1169,7 @@ h1, h2, .h1, .h2 {
     <div class="divider-accent" style="margin:40px auto 0"></div>
     <p class="dim mt-m" style="font-size:13px;letter-spacing:.08em">SLÉMON · 2026 · 制作：一诺</p>
   </div>
-  <div class="deck-footer"><span></span><span class="slide-number" data-current="11" data-total="11"></span></div>
+  <div class="deck-footer"><span></span><span class="slide-number" data-current="12" data-total="12"></span></div>
   <div class="notes">收尾。</div>
 </section>
 
@@ -1228,6 +1324,38 @@ h1, h2, .h1, .h2 {
     </p>
   </div>
 </div>
+
+<div class="data-modal-overlay img-modal" id="rankImgModalOverlay">
+  <div class="data-modal">
+    <div class="data-modal-close" id="rankImgModalClose">✕</div>
+    <img id="rankImgModalImg" src="" alt="千帆榜单原图">
+  </div>
+</div>
+
+<script>
+(function() {
+  var rankOverlay = document.getElementById('rankImgModalOverlay');
+  var rankClose = document.getElementById('rankImgModalClose');
+  var rankImg = document.getElementById('rankImgModalImg');
+  if (rankOverlay && rankImg) {
+    document.addEventListener('click', function(e) {
+      var trigger = e.target.closest ? e.target.closest('.rank-shot-trigger') : null;
+      if (!trigger) return;
+      rankImg.src = trigger.getAttribute('data-img');
+      rankOverlay.classList.add('visible');
+    });
+    rankOverlay.addEventListener('click', function() {
+      rankOverlay.classList.remove('visible');
+    });
+    if (rankClose) rankClose.addEventListener('click', function() {
+      rankOverlay.classList.remove('visible');
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') rankOverlay.classList.remove('visible');
+    });
+  }
+})();
+</script>
 
 <script>
 (function() {
