@@ -580,6 +580,14 @@ h1, h2, .h1, .h2 {
   text-underline-offset: 3px;
   cursor: pointer;
 }
+/* 弹窗触发文字：虚线下划线，末尾在文案里直接写 " ↗" 字符，不用 CSS 生成 */
+.popup-trigger {
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
 #imgHoverPreview {
   display: none; position: fixed; z-index: 9997;
   width: 320px; max-width: calc(100vw - 40px);
@@ -929,7 +937,7 @@ h1, h2, .h1, .h2 {
 <section class="slide" data-title="用户洞察">
   <div class="deck-header"><span>SLÉMON · 小红书个人思考</span><span>用户洞察</span></div>
   <p class="kicker">05 · 用户洞察</p>
-  <h2 class="h2">成人用户，有自己的审美语言。</h2>
+  <h2 class="h2 popup-trigger rank-shot-trigger" data-img="assets/rank-shots/adult-user.png">成人用户，有自己的审美语言。 ↗</h2>
   <div class="grid g2 mt-m" style="gap:28px;align-items:start">
     <div>
       <div class="chart-note-box">
@@ -945,7 +953,7 @@ h1, h2, .h1, .h2 {
     </div>
     <div>
       <div class="card" style="margin-bottom:14px">
-        <p class="kicker" style="font-size:11px">用户主动求购记录</p>
+        <p class="kicker" style="font-size:11px">大量用户主动求购记录</p>
         <p style="font-family:var(--font-sans);font-size:17px;margin:10px 0 6px">"有没有酒红色的？"</p>
         <p class="dim" style="font-size:13px">评论区高频出现，需求真实存在但现有 SKU 未覆盖</p>
       </div>
