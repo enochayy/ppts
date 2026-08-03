@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SLÉMON · 小红书个人思考</title>
+<title>SLÉMON · 小红书个人阶段总结思考</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
 <style>
@@ -666,6 +666,33 @@ h1, h2, .h1, .h2 {
 }
 .tooltip-box.visible { display: block; }
 
+/* ── 引用弹窗（.detail-trigger）悬浮缩略预览：hover 先看到内容缩略图，点击才开完整弹窗 ── */
+.detail-preview {
+  display: none;
+  position: fixed;
+  z-index: 9998;
+  width: 360px;
+  max-width: calc(100vw - 40px);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.18);
+  pointer-events: none;
+}
+.detail-preview.visible { display: block; }
+.detail-preview .kicker { font-size: 10px; }
+.detail-preview h3 { font-size: 14px; margin-bottom: 6px; }
+.detail-preview p.dim {
+  font-size: 11.5px; line-height: 1.6;
+  display: -webkit-box; -webkit-line-clamp: 5; line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden;
+}
+.detail-preview p.dim + p.dim { margin-top: 6px; -webkit-line-clamp: 3; line-clamp: 3; }
+.detail-preview::after {
+  content: '点击查看完整内容 →'; display: block; margin-top: 10px;
+  font-size: 10.5px; color: var(--text-3);
+}
+
 /* ── 图片悬浮预览 ── */
 .img-trigger {
   cursor: pointer;
@@ -712,11 +739,11 @@ h1, h2, .h1, .h2 {
 <section class="slide" data-title="封面">
   <div class="deck-header"><span>SLÉMON · 内部战略文件</span><span>保密 · 仅供内部阅读</span></div>
   <div class="cover-brand">Slémon Dance &amp; Ballet</div>
-  <p class="kicker">小红书个人思考</p>
+  <p class="kicker">小红书个人阶段总结思考</p>
   <h1 class="h1" style="font-size:52px;max-width:14ch;line-height:1.1">这是品牌第一次<br>真正走进公众视野。</h1>
   <div class="cover-rule"></div>
   <p class="lede">从零到万单店的完整路径，以及我们为什么现在就要做对的事。</p>
-  <div class="cover-date"><span>2026 · 个人思考</span><span style="margin-left:24px">制作：Enoch</span></div>
+  <div class="cover-date"><span>2026 · 个人阶段总结思考</span><span style="margin-left:24px">制作：Enoch</span></div>
   <div style="margin-top:28px;border-top:1px solid var(--border);padding-top:16px">
     <p style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3);font-family:var(--font-sans);margin-bottom:10px">我需要公司支持的事项</p>
     <div style="display:flex;gap:20px;flex-wrap:wrap">
@@ -725,20 +752,20 @@ h1, h2, .h1, .h2 {
       <span style="font-size:12px;color:var(--text-2);font-family:var(--font-sans);padding:4px 12px;border:1px solid var(--border);border-radius:2px">③ 供应商业务协调（老板层推动）</span>
     </div>
   </div>
-  <div class="deck-footer"><span>← → 键翻页</span><span class="slide-number" data-current="1" data-total="12"></span></div>
+  <div class="deck-footer"><span>← → 键翻页</span><span class="slide-number" data-current="1" data-total="15"></span></div>
   <div class="notes">封面页。</div>
 </section>
 
 <!-- 2. 渠道现状 -->
 <section class="slide" data-title="渠道现状">
-  <div class="deck-header"><span>SLÉMON · 小红书渠道个人思考</span><span>渠道现状</span></div>
+  <div class="deck-header"><span>SLÉMON · 小红书渠道个人阶段总结思考</span><span>渠道现状</span></div>
   <p class="kicker">01 · 渠道现状</p>
   <h2 class="h2">这个渠道，是否已经跑通？</h2>
   <div class="grid g3 mt-l" style="gap:20px">
-    <div class="kpi-card highlight kpi-data-trigger" id="peakKpiCard">
+    <div class="kpi-card highlight kpi-data-trigger" data-modal-target="tpl-kpi-peak">
       <div class="label">单日峰值出单</div><div class="value">45</div><div class="note">单 · 单日历史最高</div>
     </div>
-    <div class="kpi-card"><div class="label">当前投流 ROI</div><div class="value">≈ 2</div><div class="note">起号阶段正常水位</div></div>
+    <div class="kpi-card kpi-data-trigger" data-modal-target="tpl-kpi-roi"><div class="label">当前投流 ROI</div><div class="value">≈ 2.5</div><div class="note">起号阶段正常水位</div></div>
     <div class="kpi-card"><div class="label">运营状态</div><div class="value" style="font-size:28px;padding-top:8px">未亏损</div><div class="note">投流成本已被销售额覆盖</div></div>
   </div>
   <div class="pull-quote mt-l">
@@ -749,13 +776,13 @@ h1, h2, .h1, .h2 {
   <p class="dim" style="font-size:12px;line-height:1.6;margin-top:14px">
     补充说明：目前 ROI≈2 是健康水位——订单全部来自真实转化，不是<span class="tooltip-word" data-tip="淘宝平台对刷单的处罚非常重：轻则删除虚假交易与评价、搜索权重暗降30天；一般违规处5000元罚款；情节严重处20000元罚款并扣4分；特别严重处50000元罚款、扣24分、店铺关店7天，多次严重违规将被永久清退。刷出来的ROI经不起复查，一次处罚就可能让前期投入全部清零。最重要是识别出来刷单后会在模型上打上半永久标签。">刷单堆出来的虚假繁荣 ↗</span>。电商的底层公式是<span class="tooltip-word conv-rate-trigger" data-tip="销售额=访客数×转化率×客单价。转化率不是越砸钱越高——真实数据显示流量放大后往往被稀释走低。点击查看详情 →">访客 × 转化率 = 订单 ↗</span>：我们先用小流量测出真正有转化能力的款和图，确认有效后再加大投流放大访客，账号权重和订单才会一起起来——而不是盯着转化率不到1%的品硬投，钱越花越多，换来的只是被放大的假象。
   </p>
-  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="2" data-total="12"></span></div>
+  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="2" data-total="15"></span></div>
   <div class="notes">数据说话。</div>
 </section>
 
 <!-- 3. 起号期逻辑 -->
 <section class="slide" data-title="起号期逻辑">
-  <div class="deck-header"><span>SLÉMON · 小红书个人思考</span><span>起号期逻辑</span></div>
+  <div class="deck-header"><span>SLÉMON · 小红书个人阶段总结思考</span><span>起号期逻辑</span></div>
   <p class="kicker">02 · 起号期逻辑</p>
   <h2 class="h2">现在花的钱，买的是未来的势能。</h2>
   <div class="roadmap-row">
@@ -777,13 +804,13 @@ h1, h2, .h1, .h2 {
     </div>
   </div>
   <p class="dim mt-l" style="font-size:13px">* 万单店是品牌心智开始沉淀的真正起点——在这之前，一切都是热身。</p>
-  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="3" data-total="12"></span></div>
+  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="3" data-total="15"></span></div>
   <div class="notes">三阶段路径。</div>
 </section>
 
 <!-- 4. 利润结构 -->
 <section class="slide" data-title="利润结构">
-  <div class="deck-header"><span>SLÉMON · 小红书个人思考</span><span>利润结构</span></div>
+  <div class="deck-header"><span>SLÉMON · 小红书个人阶段总结思考</span><span>利润结构</span></div>
   <p class="kicker">03 · 利润结构</p>
   <h2 class="h2">利润不靠单一爆款，靠产品组合。</h2>
   <div class="grid g2 mt-l" style="gap:24px">
@@ -799,13 +826,13 @@ h1, h2, .h1, .h2 {
     </div>
   </div>
   <p class="dim mt-l" style="font-size:13px">两类产品共存，互相扶持：<span class="tooltip-word" data-tip="引流款是店铺的流量入口，其核心价值不在于利润，而在于以低价或高性价比吸引潜在客户进店浏览。一旦去掉引流款，店铺人流量骤降，利润款也将失去曝光机会。行业经验：电商店铺通常配置3-5个引流款，占店内SKU约10%，活动期间比重可适当提高。（来源：有赞电商运营方法论）">流量款负责拉人进门 ↗</span>，利润款负责让账号赚钱。</p>
-  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="4" data-total="12"></span></div>
+  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="4" data-total="15"></span></div>
   <div class="notes">产品矩阵逻辑。</div>
 </section>
 
 <!-- 5. 市场节点与蓄水判断 -->
 <section class="slide" data-title="市场节点">
-  <div class="deck-header"><span>SLÉMON · 小红书个人思考</span><span>市场节点</span></div>
+  <div class="deck-header"><span>SLÉMON · 小红书个人阶段总结思考</span><span>市场节点</span></div>
   <p class="kicker">04 · 小红书里程碑 未来展望</p>
   <h2 class="h2" style="font-size:34px">小红书阶段性里程碑，<br>单日最高 45 单。</h2>
 
@@ -850,13 +877,13 @@ h1, h2, .h1, .h2 {
     </p>
   </div>
 
-  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="5" data-total="12"></span></div>
+  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="5" data-total="15"></span></div>
   <div class="notes">旺季即将到来，蓄水已经在做。但产品供给是当前最大的卡点，且丹诗戈款存在比价流失与利润天花板问题，需要尽快解决。</div>
 </section>
 
 <!-- 5.5 千帆四榜实证 -->
 <section class="slide" data-title="千帆榜单">
-  <div class="deck-header"><span>SLÉMON · 小红书个人思考</span><span>千帆榜单</span></div>
+  <div class="deck-header"><span>SLÉMON · 小红书个人阶段总结思考</span><span>千帆榜单</span></div>
   <p class="kicker">04.5 · 数据佐证</p>
   <h2 class="h2" style="font-size:34px">单日 45 单不是孤例，<br>千帆四榜同步被平台认可。</h2>
   <p class="dim mt-m" style="font-size:13px;line-height:1.6">阅读榜、成交榜、热卖榜、引流榜同时上榜"优秀账号"，说明起量不是单点异常，而是内容、转化、流量三端同步跑通。<span class="dim2" style="font-size:11px">数据来源：小红书千帆平台 · 2026-07-27</span></p>
@@ -929,13 +956,13 @@ h1, h2, .h1, .h2 {
 
   </div>
 
-  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="6" data-total="12"></span></div>
+  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="6" data-total="15"></span></div>
   <div class="notes">千帆四榜排名，佐证单日45单峰值背后是阅读、成交、热卖三端同步优秀，引流榜排名靠后（#19/41）说明流量放大仍有空间，与"下一阶段目标是旺季冲量"的判断一致。</div>
 </section>
 
 <!-- 6. 用户洞察 -->
 <section class="slide" data-title="用户洞察">
-  <div class="deck-header"><span>SLÉMON · 小红书个人思考</span><span>用户洞察</span></div>
+  <div class="deck-header"><span>SLÉMON · 小红书个人阶段总结思考</span><span>用户洞察</span></div>
   <p class="kicker">05 · 用户洞察</p>
   <h2 class="h2 popup-trigger rank-shot-trigger" data-img="assets/rank-shots/adult-user.png">成人用户，有自己的审美语言。 ↗</h2>
   <div class="grid g2 mt-m" style="gap:28px;align-items:start">
@@ -964,13 +991,170 @@ h1, h2, .h1, .h2 {
       </div>
     </div>
   </div>
-  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="7" data-total="12"></span></div>
+  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="7" data-total="15"></span></div>
   <div class="notes">颜色销售数据图表：棕色112件占50%，粉色61件，肉色42件。上线初期主推肉粉，棕色自然跑出后才换主图。</div>
+</section>
+
+<!-- 6.5 我对市场方案的观察（上）：搜索量≠机会 -->
+<section class="slide" data-title="市场方案观察·上">
+  <div class="deck-header"><span>SLÉMON · 小红书个人阶段总结思考</span><span>我对市场方案的观察</span></div>
+  <p class="kicker">05.5 · 我对市场方案的观察（上）</p>
+  <h2 class="h2" style="font-size:32px">搜索量大，不等于我能分到蛋糕。</h2>
+  <p style="font-size:14px;color:var(--text-2);line-height:1.8;margin-bottom:14px">常见的判断链条是：<strong style="color:var(--text-1)">搜索量大 → 出货量大 → 潜力大 → 我们去做</strong>。这条链条断在第三步到第四步之间——一个品类成为风口后，头部品牌拿走大部分资源，跟风的新品牌只能在价格和营销上内卷，最终陷入价格战。</p>
+
+  <div class="grid g2 mt-s" style="gap:16px">
+    <div class="card" style="border-top:3px solid var(--bad)">
+      <p class="kicker" style="font-size:11px;color:var(--bad);margin-bottom:8px">观察一 · 搜索量大的品类，往往头部垄断最严重</p>
+      <p style="font-size:13px;line-height:1.8;color:var(--text-2)">淘宝大类目销量榜的头部位置长期被大卖家垄断，中小卖家在大类目冲榜基本无从突围。瑞幸、库迪拿走基础款咖啡的绝大多数份额；体服基础款同理——消费者为什么要冒险选一个没有确定性的新品牌？</p>
+      <p style="font-size:11px;margin-top:8px"><span class="tooltip-word detail-trigger" data-modal-target="tpl-taobao-rank">来源：店托易《淘宝排行榜怎么用》 ↗</span></p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--bad)">
+      <p class="kicker" style="font-size:11px;color:var(--bad);margin-bottom:8px">观察二 · 基础款消费决策是"信任驱动"，不是"产品驱动"</p>
+      <p style="font-size:13px;line-height:1.8;color:var(--text-2)">品类高度同质化时，消费者会直接走向价格驱动或品牌信任驱动，而不是被新产品说服。黑色螺纹体服哪家都能做，消费者唯一的决策依据是"我认不认识这个牌子"——小茉莉、柏屋已经积累了评价与复购，我们是谁？</p>
+      <p style="font-size:11px;margin-top:8px"><span class="tooltip-word detail-trigger" data-modal-target="tpl-cbndata-trust">来源：CBNData《如何理解白牌与消费降级》 ↗</span></p>
+    </div>
+  </div>
+
+  <p style="font-size:11px;color:var(--text-3);margin-top:14px;line-height:1.6">延伸参考：<span class="tooltip-word detail-trigger" data-modal-target="tpl-zhihu-brand">知乎《如何让你的品牌在同质化竞争中突围？》 ↗</span> ・ <span class="tooltip-word detail-trigger" data-modal-target="tpl-woshipm-brand">人人都是产品经理《品牌产品困局：同质化产品泛滥》 ↗</span></p>
+
+  <template id="tpl-taobao-rank">
+    <p class="kicker" style="margin-bottom:6px">原文精简摘要</p>
+    <h3 class="h3" style="margin-bottom:12px;font-size:20px">淘宝排行榜怎么用</h3>
+    <p class="dim" style="font-size:14px;line-height:1.8">文章把淘宝排行榜分成四类：<strong style="color:var(--text-1)">销量榜</strong>（近7/30天真实支付订单，适合选性价比商品）、<strong style="color:var(--text-1)">热度榜</strong>（搜索量+加购量+收藏量综合得分，反映趋势款）、<strong style="color:var(--text-1)">好评榜</strong>（好评率+带图评价+追评率，适合重口碑类目）、<strong style="color:var(--text-1)">新品榜</strong>（新品销量增速+搜索增速，竞争小易获流量）。</p>
+    <p class="dim" style="font-size:14px;line-height:1.8;margin-top:10px">销量榜的综合评分模型是：<span class="mono" style="font-size:13px">近30天销量(60%)+7天增速(20%)+好评率(15%)+退款率(5%)</span>。文章明确指出"头部商品垄断，中小卖家难突围"，但也给出突围路径：新店/新品应主攻竞争更小的"新品榜+热度榜"；中小卖家应冲"细分品类榜"而非大类目，例如冲"小个子连衣裙销量榜"而不是"连衣裙销量榜"。文中举了一个案例：某女装卖家冲大类目销量榜失败后，转攻细分品类，1个月内冲进该细分榜 TOP10。文章同时提醒，卖家应通过合规运营（选适配榜单、优化核心数据）获取流量，避免刷单——刷单会被平台判定并影响长期权重。</p>
+    <div class="divider" style="margin:16px 0"></div>
+    <p class="dim2" style="font-size:12px"><a href="https://diantuoyi.com/article/14481.html" target="_blank" rel="noopener">跳转原网页 · 店托易 ↗</a></p>
+  </template>
+  <template id="tpl-cbndata-trust">
+    <p class="kicker" style="margin-bottom:6px">原文精简摘要</p>
+    <h3 class="h3" style="margin-bottom:12px;font-size:20px">深度解析：如何理解白牌与消费降级？</h3>
+    <p class="dim" style="font-size:14px;line-height:1.8">文章把白牌定义为"非品牌"——即"不能影响到下一次用户消费决策的产品"，缺乏知名度与用户信任，因此只能靠价格策略换取销量。消费者转向白牌的原因分三层：<strong style="color:var(--text-1)">供给端</strong>，供给过剩打破了传统品牌的价值体系，电商渠道又大幅降低了比价的搜寻成本；<strong style="color:var(--text-1)">渠道端</strong>，互联网让购买便利性成本大幅下降，决策逻辑从"就近的便利驱动"转向"比价的价格驱动"；<strong style="color:var(--text-1)">用户端</strong>，品牌原本基于稀缺性的社交价值被打破，用户"回归到物理属性"本身，更愿意接受性价比更高的选择。</p>
+    <p class="dim" style="font-size:14px;line-height:1.8;margin-top:10px">文章据此提出一个四象限决策模型，按"产品同质化程度"×"搜寻成本"划分：同质化+低搜寻成本→<strong style="color:var(--text-1)">便利驱动</strong>（就近购买）；同质化+高搜寻成本→<strong style="color:var(--text-1)">价格驱动</strong>（比价选便宜的）；差异化+低搜寻成本→<strong style="color:var(--text-1)">价值驱动</strong>（选品质好的）；差异化+高搜寻成本→<strong style="color:var(--text-1)">关系驱动</strong>（品牌忠诚）。互联网的普及，正在把越来越多品类推向"价格驱动"象限。文章的核心论点是：这不是真正的"消费降级"，而是"消费狂欢后的回归"——用户只是在自己可接受的预算范围内，寻找性价比更高的选择，例如"从京东到拼多多，我们并没有降低消费，只是希望找到更有性价比的选择"。</p>
+    <div class="divider" style="margin:16px 0"></div>
+    <p class="dim2" style="font-size:12px"><a href="https://www.cbndata.com/information/292697" target="_blank" rel="noopener">跳转原网页 · CBNData ↗</a></p>
+  </template>
+  <template id="tpl-zhihu-brand">
+    <p class="kicker" style="margin-bottom:6px">原文精简摘要</p>
+    <h3 class="h3" style="margin-bottom:12px;font-size:20px">如何让你的品牌在同质化竞争中突围？</h3>
+    <p class="dim" style="font-size:14px;line-height:1.8">文章的核心论点是：差异化是同质化竞争中制胜的关键——品牌需要做市场与消费者调研，对比分析竞品，找出那些"满足消费者需求、但竞品尚未覆盖"的属性。文章用百事可乐对垒可口可乐作为案例：百事早期跟随模仿可口可乐的打法，一度被消费者视为"廉价仿制品"；但经过长期竞争，两个品牌逐渐在口味、品类、定位上找到细微差异，最终"分而治之"实现共存，而不是一方彻底击垮另一方。文章的结论是，同质化品牌之间的竞争未必是零和博弈，反而可能相互促进创新，而突围的根本方式是让品牌真正做出差异化，而非单纯模仿头部玩家。</p>
+    <p class="dim2" style="font-size:11px;line-height:1.7;margin-top:10px;opacity:.8">说明：知乎对本工具的直接抓取有反爬限制，以上内容是通过公开搜索引擎索引间接确认的摘要，未能逐字核对原文全文，如需精确引用建议点击下方链接自行核实。</p>
+    <div class="divider" style="margin:16px 0"></div>
+    <p class="dim2" style="font-size:12px"><a href="https://zhuanlan.zhihu.com/p/65682466" target="_blank" rel="noopener">跳转原网页 · 知乎 ↗</a></p>
+  </template>
+  <template id="tpl-woshipm-brand">
+    <p class="kicker" style="margin-bottom:6px">原文精简摘要</p>
+    <h3 class="h3" style="margin-bottom:12px;font-size:20px">品牌产品困局：同质化产品泛滥</h3>
+    <p class="dim" style="font-size:14px;line-height:1.8">文章指出消费者的典型购买心理路径是：<strong style="color:var(--text-1)">看品牌 → 选产品 → 对比价格 → 对比活动（优惠政策）→ 看口碑 → 下单购买</strong>。消费者最初聚焦的是"你卖的是什么品类"，这决定了消费者是否会继续走完后面一系列心理决策。文章判断："大众的品类、热销的产品，越难实现差异化"——在包装、卖点、价格、服务等方面都会愈加趋同，最终把中小品牌拖入价格战。</p>
+    <p class="dim" style="font-size:14px;line-height:1.8;margin-top:10px">文章给出四个破局维度：①<strong style="color:var(--text-1)">品类机会</strong>——聚焦细分领域（如长城汽车专攻SUV市场）或研发全新品类；②<strong style="color:var(--text-1)">产品卖点</strong>——"卖点是消费者的需求点，是给消费者一个购买的理由"，需要聚焦单一、清晰的卖点，而非面面俱到；③<strong style="color:var(--text-1)">差异化</strong>——包括定位差异化、使用场景差异化、包装差异化；④<strong style="color:var(--text-1)">文化与共情</strong>——通过品牌文化的持续传播，建立消费者的情感认同。</p>
+    <div class="divider" style="margin:16px 0"></div>
+    <p class="dim2" style="font-size:12px"><a href="https://www.woshipm.com/marketing/5207467.html" target="_blank" rel="noopener">跳转原网页 · 人人都是产品经理 ↗</a></p>
+  </template>
+
+  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="8" data-total="15"></span></div>
+  <div class="notes">我对市场方案的观察：搜索量大不等于我能分到蛋糕。观察一是搜索量大的品类往往头部垄断最严重；观察二是基础款的消费决策是信任驱动，不是产品驱动。</div>
+</section>
+
+<!-- 6.6 我对市场方案的观察（下）：正确的逻辑是什么 -->
+<section class="slide" data-title="市场方案观察·下">
+  <div class="deck-header"><span>SLÉMON · 小红书个人阶段总结思考</span><span>我对市场方案的观察</span></div>
+  <p class="kicker">05.5 · 我对市场方案的观察（下）</p>
+  <h2 class="h2" style="font-size:32px">正确的逻辑：从"大而全"到"小而美"。</h2>
+
+  <div class="grid g2 mt-s" style="gap:16px">
+    <div class="card" style="border-top:3px solid var(--bad)">
+      <p class="kicker" style="font-size:11px;color:var(--bad);margin-bottom:8px">观察三 · 白牌+流量战，双重绞杀基础款</p>
+      <p style="font-size:13px;line-height:1.8;color:var(--text-2)">白牌的爆品公式是：选对品、定好价、套素材、再投流——这套公式在基础款品类尤其凶猛。我们要做基础款体服，对手不只是小茉莉柏屋，还有无数9.9包邮的白牌在拼多多、抖音把价格地板打穿，我们的成本结构和品牌积累都撑不住这场战争。</p>
+      <p style="font-size:11px;margin-top:8px"><span class="tooltip-word detail-trigger" data-modal-target="tpl-cbndata-white">来源：CBNData《白转品，今天白牌不只是想抢走你的生意》 ↗</span></p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--bad)">
+      <p class="kicker" style="font-size:11px;color:var(--bad);margin-bottom:8px">观察四 · 混淆"品类天花板"和"我的机会窗口"</p>
+      <p style="font-size:13px;line-height:1.8;color:var(--text-2)">"品牌即品类"阶段：消费者提起某品类就联想到该品牌，自然流量倒流到它身上。舞蹈服基础款赛道，小茉莉/柏屋已接近这个阶段——一旦"体服=小茉莉"占据心智，我们再进去不是竞争，是陪跑。搜索量大恰恰说明赛道已被跑马圈地完了。</p>
+      <p style="font-size:11px;margin-top:8px"><span class="tooltip-word detail-trigger" data-modal-target="tpl-brand-four-stages">来源：东吴证券《品牌的四个阶段》 ↗</span></p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px;border-top:3px solid var(--accent)">
+    <p class="kicker" style="font-size:11px;margin-bottom:8px">那么正确的逻辑是什么</p>
+    <p style="font-size:13px;line-height:1.85;color:var(--text-2)">中小卖家的路径是从"大而全"转向"小而美"——蓝海选品标准：日均搜索量足够但竞争度低，商品数/搜索量比值越小越好。咖啡类比已经给出答案：想做成功品牌，是因为做了差异化——独特卖点、人格化IP、内容场景。<strong style="color:var(--text-1)">SLÉMON 的芭蕾专业线、美学设计感、专业运动员背书，才是能在头部效应下杀出来的切口</strong>——而不是去跟小茉莉卷基础款体服。</p>
+    <p style="font-size:11px;margin-top:8px"><span class="tooltip-word detail-trigger" data-modal-target="tpl-blueocean-selection">来源：晓多AI《淘宝选品上新思路与蓝海关键词挖掘》 ↗</span></p>
+  </div>
+
+  <template id="tpl-cbndata-white">
+    <p class="kicker" style="margin-bottom:6px">原文精简摘要</p>
+    <h3 class="h3" style="margin-bottom:12px;font-size:20px">白转品，今天白牌不只是想抢走你的生意</h3>
+    <p class="dim" style="font-size:14px;line-height:1.8">文章指出白牌在电商平台已经跑出一套标准化"爆品公式"：<strong style="color:var(--text-1)">选对品、定好价、套素材、再投流</strong>。举的案例是"温博士"——2024年上半年发布引流素材11728条，单条最高曝光量超4000万，同比增速788%，成为抖音美妆增速最快品牌。</p>
+    <p class="dim" style="font-size:14px;line-height:1.8;margin-top:10px">文章给出的数据显示白牌对中间层品牌的冲击力度：拼多多2023年营收中60%由白牌贡献；视频号直播电商85%的GMV来自白牌商家；2024年上半年抖音防晒服销售额前十中，一半是新面孔白牌。文章分析原因：传统品牌习惯"关起门来修仙"、靠报告拼凑做用户洞察，而白牌创始人直接与消费者沟通，"每天花半小时刷用户评价"；同时57.2%的消费者倾向选择平替商品，心理是"可以买贵的，但不能买贵了"。文中还举了两个案例：曾经领衔防晒品类的"蕉下"如今被白牌蚕食份额；名创优品2023年营收涨176.4%，白牌毛利率30%～40%，成为其盈利的主要承担者。</p>
+    <div class="divider" style="margin:16px 0"></div>
+    <p class="dim2" style="font-size:12px"><a href="https://m.cbndata.com/information/293302" target="_blank" rel="noopener">跳转原网页 · CBNData ↗</a></p>
+  </template>
+  <template id="tpl-brand-four-stages">
+    <p class="kicker" style="margin-bottom:6px">原文精简摘要</p>
+    <h3 class="h3" style="margin-bottom:12px;font-size:20px">品牌的四个阶段——"品牌力"究竟指什么，投资中要寻找怎样的消费品？</h3>
+    <p class="dim" style="font-size:14px;line-height:1.8">这是东吴证券分析师吴劲草于2021年8月25日发布的行业研究报告。报告把品牌力拆解为四个递进阶段：<strong style="color:var(--text-1)">1.0 品牌即生产</strong>——比拼生产能力与效率；<strong style="color:var(--text-1)">2.0 品牌即优选</strong>——多品牌同台竞争下，消费者对特定品牌形成倾向性偏好与文化认同；<strong style="color:var(--text-1)">3.0 品牌即品类</strong>——消费者一提起某个品类就会联想到该品牌，品牌与整个品类基本划上等号，品类里的大部分自然流量因此倒流向它；<strong style="color:var(--text-1)">4.0 品牌即身份</strong>——品牌成为使用者身份的象征，能够形成较高且稳定的价格溢价。</p>
+    <p class="dim2" style="font-size:11px;line-height:1.7;margin-top:10px;opacity:.8">说明：原文是一份 5.7MB 的 PDF 研究报告，本工具未能直接解析出正文文本，以上四阶段定义是通过公开搜索引擎的索引摘要间接确认（标题、作者、发布机构与日期已核对一致），完整论证逻辑与案例建议点击下方链接、打开 PDF 自行核实。</p>
+    <div class="divider" style="margin:16px 0"></div>
+    <p class="dim2" style="font-size:12px"><a href="https://pdf.dfcfw.com/pdf/H3_AP202108251512291685_1.pdf" target="_blank" rel="noopener">跳转原网页 · 东吴证券 ↗</a></p>
+  </template>
+  <template id="tpl-blueocean-selection">
+    <p class="kicker" style="margin-bottom:6px">原文精简摘要</p>
+    <h3 class="h3" style="margin-bottom:12px;font-size:20px">淘宝店铺选品上新思路怎么定？淘宝蓝海关键词去哪挖？</h3>
+    <p class="dim" style="font-size:14px;line-height:1.8">文章给出的蓝海品类判断标准是：<strong style="color:var(--text-1)">搜索人气 > 1000</strong>（确保基础流量）、<strong style="color:var(--text-1)">在线商品数相对较少</strong>（搜索人气与在线商品数的比值越大越好）、<strong style="color:var(--text-1)">商城点击占比 < 50%</strong>（对天猫依赖度低）、<strong style="color:var(--text-1)">支付转化率高于行业均值</strong>。文章特别提到，"搜索热度大于支付转化率"的类目，说明市场需求旺盛但产品未被充分满足，存在切入机会。</p>
+    <p class="dim" style="font-size:14px;line-height:1.8;margin-top:10px">对于"大而全"转向"小而美"，文章建议中小卖家：①聚焦细分人群（如 Z 世代宝妈、银发健身族）或特定场景（如办公室速食、小户型收纳）；②在竞品评价和社区论坛里挖掘用户抱怨的"痛点型"需求；③做供应链层面的微创新——在基础款上增加实用功能、换用差异化材质、设计独特包装。文章强调，长尾词通常比核心词竞争更小，更适合中小卖家切入。</p>
+    <div class="divider" style="margin:16px 0"></div>
+    <p class="dim2" style="font-size:12px"><a href="https://insight.xiaoduoai.com/e-commerce-information/taobao-information/how-to-determine-the-ideas-for-product-selection-and-new-product-launch-in-taobao-shops-where-to-find-blue-ocean-keywords-for-taobao-data-driven-product-selection-multi-channel-mining-skills-three-ste.html" target="_blank" rel="noopener">跳转原网页 · 晓多AI ↗</a></p>
+  </template>
+
+  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="9" data-total="15"></span></div>
+  <div class="notes">正确逻辑：观察三是白牌+流量战双重绞杀基础款；观察四是混淆品类天花板和自己的机会窗口。结论：从大而全转向小而美，靠差异化切入，而不是卷基础款。</div>
+</section>
+
+<!-- 6.7 我对市场方案的观察（数据佐证）：自家近30天成交数据 -->
+<section class="slide" data-title="市场方案观察·数据佐证">
+  <div class="deck-header"><span>SLÉMON · 小红书个人阶段总结思考</span><span>我对市场方案的观察 · 数据佐证</span></div>
+  <p class="kicker">05.6 · 我对市场方案的观察（数据佐证）</p>
+  <h2 class="h2" style="font-size:30px">能突围的，从来不是"标品"，是差异化。</h2>
+  <p style="font-size:13px;color:var(--text-2);line-height:1.7;margin-bottom:12px">近 30 天店铺后台真实成交数据（按支付金额排序）：头部两名都是<strong style="color:var(--text-1)">有特殊工艺/配色的差异化鞋款</strong>，而不是主观定义的"好卖"基础标品。</p>
+
+  <div style="overflow-x:auto">
+    <table class="data-table" style="font-size:11.5px">
+      <caption>近 30 天商品销售明细 · 数据来源：店铺后台「商品明细」导出</caption>
+      <thead><tr><th style="text-align:left">商品信息</th><th>支付金额</th><th>访客数</th><th>订单数</th><th>退款率</th></tr></thead>
+      <tbody>
+        <tr style="background:color-mix(in srgb,var(--good) 8%,transparent)"><td style="text-align:left">包脚不掉跟｜软底练功鞋弹力布跳… <span class="pill pill-accent" style="font-size:9px;padding:2px 7px">差异化鞋款</span></td><td>14,760.46</td><td>2,580</td><td>209</td><td>19.91%</td></tr>
+        <tr style="background:color-mix(in srgb,var(--good) 8%,transparent)"><td style="text-align:left">魔力弓桥弹力布芭蕾舞鞋练习基… <span class="pill pill-accent" style="font-size:9px;padding:2px 7px">差异化鞋款</span></td><td>5,998.95</td><td>1,152</td><td>78</td><td>19.42%</td></tr>
+        <tr style="background:color-mix(in srgb,var(--bad) 8%,transparent)"><td style="text-align:left">SLEMON舞蹈成人女芭蕾体操服… <span class="pill" style="font-size:9px;padding:2px 7px;background:color-mix(in srgb,var(--bad) 14%,transparent);color:var(--bad);border-color:transparent">基础款体服</span></td><td>3,612.57</td><td>1,129</td><td>15</td><td style="color:var(--bad);font-weight:600">58.30%</td></tr>
+        <tr style="background:color-mix(in srgb,var(--bad) 8%,transparent)"><td style="text-align:left">通贝通弦系列专业芭蕾无袖芭蕾… <span class="pill" style="font-size:9px;padding:2px 7px;background:color-mix(in srgb,var(--bad) 14%,transparent);color:var(--bad);border-color:transparent">"弦系列"概念基础款</span></td><td>3,434.98</td><td>1,194</td><td>19</td><td style="color:var(--bad);font-weight:600">65.03%</td></tr>
+        <tr><td style="text-align:left">伊珀雷肩影系列升级布料芭蕾bal…</td><td>2,533.05</td><td>1,598</td><td>41</td><td>25.46%</td></tr>
+        <tr style="background:color-mix(in srgb,var(--bad) 8%,transparent)"><td style="text-align:left">通贝半弦系列专业芭蕾舞练功服… <span class="pill" style="font-size:9px;padding:2px 7px;background:color-mix(in srgb,var(--bad) 14%,transparent);color:var(--bad);border-color:transparent">"弦系列"概念基础款</span></td><td>2,343.95</td><td>785</td><td>14</td><td style="color:var(--bad);font-weight:600">72.84%</td></tr>
+        <tr style="background:color-mix(in srgb,var(--good) 8%,transparent)"><td style="text-align:left">丝滑缎面｜芭蕾鞋形体猫爪鞋免系… <span class="pill pill-accent" style="font-size:9px;padding:2px 7px">差异化鞋款 · 非颜色驱动</span></td><td>1,883.27</td><td>610</td><td>25</td><td>15.56%</td></tr>
+        <tr><td style="text-align:left">交叉水墨｜国风芭蕾舞形体体操服…</td><td>1,473.40</td><td>1,012</td><td>9</td><td>44.79%</td></tr>
+        <tr><td style="text-align:left">优雅风韵芭蕾舞服演出服形体体…</td><td>1,197.22</td><td>572</td><td>12</td><td>15.54%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="grid g3 mt-m" style="gap:14px">
+    <div class="card" style="border-top:3px solid var(--good)">
+      <p class="kicker" style="font-size:11px;margin-bottom:8px">观察五 · 头部销量靠的是差异化，不是标品</p>
+      <p style="font-size:12px;line-height:1.75;color:var(--text-2)">销售额第一、第二的两款鞋，都不是基础色基础款，而是"不掉跟软底""弹力布魔力弓桥"这类带工艺/结构差异化的产品，退货率也是全场最低区间——差异化不只不拖累转化，反而是当前真正在跑量的引擎。</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--good)">
+      <p class="kicker" style="font-size:11px;margin-bottom:8px">观察六 · 唯一非颜色驱动出圈的鞋，靠的也是"特殊"</p>
+      <p style="font-size:12px;line-height:1.75;color:var(--text-2)">丝滑缎面芭蕾鞋不是靠配色出圈，退货率却是全场第二低（15.56%）。说明真正驱动动销的底层逻辑是"差异化"本身——颜色只是差异化的一种实现方式，材质、工艺同样成立。</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--bad)">
+      <p class="kicker" style="font-size:11px;color:var(--bad);margin-bottom:8px">观察七 · "弦系列"：通过给基础款赋予营销概念，转化率仍不够高</p>
+      <p style="font-size:12px;line-height:1.75;color:var(--text-2)">"通弦""半弦"系列给基础款体服赋予了一个记忆点，实操没有问题。数据上看，这两款的退货率（65.03%、72.84%）比其他款更高一些，<strong style="color:var(--text-1)">版型、面料这些产品端细节</strong>或许还有进一步打磨的空间——这也和现状思考页提到的体服退货率问题对得上，是接下来可以重点优化的地方。</p>
+    </div>
+  </div>
+
+  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="10" data-total="15"></span></div>
+  <div class="notes">数据佐证：近30天自家成交数据显示头部销量靠差异化鞋款，不是标品。缎面芭蕾鞋证明差异化不止颜色一种维度。弦系列的营销概念方向是对的，退货率数据提示版型面料还有打磨空间。</div>
 </section>
 
 <!-- 7. 品牌视野 -->
 <section class="slide" data-title="品牌视野">
-  <div class="deck-header"><span>SLÉMON · 小红书个人思考</span><span>品牌视野</span></div>
+  <div class="deck-header"><span>SLÉMON · 小红书个人阶段总结思考</span><span>品牌视野</span></div>
   <p class="kicker">06 · 品牌视野</p>
   <h2 class="h2" style="font-size:34px">这是一次真正的二次创业。</h2>
   <p style="font-size:13px;color:var(--text-2);font-family:var(--font-sans);line-height:1.6;margin-bottom:10px">
@@ -1021,26 +1205,26 @@ h1, h2, .h1, .h2 {
       <div style="margin-top:14px">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
           <span style="font-size:12px;color:var(--text-3);font-family:var(--font-sans);letter-spacing:.08em;text-transform:uppercase">当前进度</span>
-          <span style="font-family:var(--font-sans);font-size:20px;font-weight:700;color:var(--accent)">3,700 <span style="font-size:13px;color:var(--text-3);font-family:var(--font-sans);font-weight:400">/ 10,000 单</span></span>
+          <span style="font-family:var(--font-sans);font-size:20px;font-weight:700;color:var(--accent)">4000 <span style="font-size:13px;color:var(--text-3);font-family:var(--font-sans);font-weight:400">/ 10,000 单</span></span>
         </div>
         <div style="width:100%;height:8px;background:var(--surface-2);border-radius:4px;overflow:hidden">
           <div style="width:37%;height:100%;background:var(--accent);border-radius:4px;transition:width 1s ease"></div>
         </div>
         <div style="display:flex;justify-content:space-between;margin-top:6px">
           <span style="font-size:11px;color:var(--text-3);font-family:var(--font-sans)">0</span>
-          <span style="font-size:11px;color:var(--accent);font-family:var(--font-sans);font-weight:600">37% 完成</span>
+          <span style="font-size:11px;color:var(--accent);font-family:var(--font-sans);font-weight:600">40% 完成</span>
           <span style="font-size:11px;color:var(--text-3);font-family:var(--font-sans)">10,000</span>
         </div>
       </div>
     </div>
   </div>
-  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="8" data-total="12"></span></div>
+  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="11" data-total="15"></span></div>
   <div class="notes">品牌定性。</div>
 </section>
 
 <!-- 8. 现状思考 -->
 <section class="slide" data-title="现状思考">
-  <div class="deck-header"><span>SLÉMON · 小红书个人思考</span><span>现状与行动建议</span></div>
+  <div class="deck-header"><span>SLÉMON · 小红书个人阶段总结思考</span><span>现状与行动建议</span></div>
   <p class="kicker">07 · 现状思考</p>
   <h2 class="h2" style="font-size:36px">产品力尚未就绪，<br>但方向已经清晰。</h2>
 
@@ -1091,13 +1275,13 @@ h1, h2, .h1, .h2 {
     </div>
   </div>
 
-  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="9" data-total="12"></span></div>
+  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="12" data-total="15"></span></div>
   <div class="notes">产品力不足是事实，但方向已经跑出来了。差异化配色是当前最具性价比的突破口，需要老板层面去推动供应链侧的配合。</div>
 </section>
 
 <!-- 8.5 假设情景推演（上）：路径与结果 -->
 <section class="slide" data-title="假设情景推演·路径">
-  <div class="deck-header"><span>SLÉMON · 小红书个人思考</span><span>假设情景推演</span></div>
+  <div class="deck-header"><span>SLÉMON · 小红书个人阶段总结思考</span><span>假设情景推演</span></div>
   <p class="kicker">08 · 假设情景推演 What-If Scenario Analysis（上）</p>
   <h2 class="h2" style="font-size:32px">情景假设：<br>现有路径若持续验证成立
 
@@ -1138,13 +1322,13 @@ h1, h2, .h1, .h2 {
     </div>
   </div>
 
-  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="10" data-total="12"></span></div>
+  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="13" data-total="15"></span></div>
   <div class="notes">假设情景推演路径：现有3款退货率约30%的服饰与差异色芭蕾鞋持续出单，旺季前蓄够基础销量、好评率、店铺权重，旺季按大盘3倍中间值1.5倍提升，单日约112单，日均破百；2-3年后品牌认知度与研发正反馈路线有望成型。</div>
 </section>
 
 <!-- 8.6 假设情景推演（下）：风险与窗口期 -->
 <section class="slide" data-title="假设情景推演·风险">
-  <div class="deck-header"><span>SLÉMON · 小红书个人思考</span><span>假设情景推演</span></div>
+  <div class="deck-header"><span>SLÉMON · 小红书个人阶段总结思考</span><span>假设情景推演</span></div>
   <p class="kicker">08 · 假设情景推演 What-If Scenario Analysis（下）</p>
   <h2 class="h2" style="font-size:32px">但品牌力储备的窗口期，<br>正在收窄。</h2>
 
@@ -1164,13 +1348,13 @@ h1, h2, .h1, .h2 {
     </div>
   </div>
 
-  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="11" data-total="12"></span></div>
+  <div class="deck-footer"><span>SLÉMON · 内部战略文件</span><span class="slide-number" data-current="14" data-total="15"></span></div>
   <div class="notes">风险点：类目头部效应明显（对标奶茶、咖啡、新能源车），品牌力储备窗口期有限，存量小朋友转化断层与下一代新生儿数量断崖风险迫近。</div>
 </section>
 
 <!-- 9. 结尾 -->
 <section class="slide center tc" data-title="结语">
-  <div class="deck-header"><span>SLÉMON · 小红书个人思考</span><span></span></div>
+  <div class="deck-header"><span>SLÉMON · 小红书个人阶段总结思考</span><span></span></div>
   <div>
     <p class="kicker">一切以数据为准</p>
     <div class="closing-word closing-serif mt-m">数据说话</div>
@@ -1179,7 +1363,7 @@ h1, h2, .h1, .h2 {
     <div class="divider-accent" style="margin:40px auto 0"></div>
     <p class="dim mt-m" style="font-size:13px;letter-spacing:.08em">SLÉMON · 2026 · 制作：一诺</p>
   </div>
-  <div class="deck-footer"><span></span><span class="slide-number" data-current="12" data-total="12"></span></div>
+  <div class="deck-footer"><span></span><span class="slide-number" data-current="15" data-total="15"></span></div>
   <div class="notes">收尾。</div>
 </section>
 
@@ -1189,7 +1373,17 @@ h1, h2, .h1, .h2 {
 <div id="img-popup"><img id="img-popup-img" src="" alt=""></div>
 <div id="imgHoverPreview"><img id="imgHoverPreviewImg" src="" alt=""></div>
 
-<div class="kpi-data-preview" id="kpiDataPreview">
+<!-- 通用 KPI 悬浮预览 + 点击放大：配合任意数量的 .kpi-data-trigger + data-modal-target="tpl-kpi-xxx" 使用，每张卡片自己的表格放进对应 <template> -->
+<div class="kpi-data-preview" id="kpiDataPreview"><div id="kpiDataPreviewBody"></div></div>
+
+<div class="data-modal-overlay" id="dataModalOverlay">
+  <div class="data-modal">
+    <div class="data-modal-close" id="dataModalClose">✕</div>
+    <div id="dataModalBody"></div>
+  </div>
+</div>
+
+<template id="tpl-kpi-peak">
   <table class="data-table">
     <caption>数据明细 · 近 6 日（非K播口径）</caption>
     <thead><tr><th>日期</th><th>总消费</th><th>电商推广总消耗</th><th>标准投消费</th><th>简单投消费</th><th>支付订单量</th><th>支付金额</th><th>投入产出比</th></tr></thead>
@@ -1201,30 +1395,28 @@ h1, h2, .h1, .h2 {
       <tr><td>2026-07-24</td><td>677.51</td><td>677.51</td><td>677.51</td><td>0.00</td><td>21</td><td>1,342.30</td><td>1.98</td></tr>
       <tr><td>2026-07-25</td><td>1,468.33</td><td>1,468.33</td><td>1,468.33</td><td>0.00</td><td>33</td><td>3,070.00</td><td>2.09</td></tr>
       <tr><td>2026-07-26</td><td>1,688.68</td><td>1,688.68</td><td>1,688.68</td><td>0.00</td><td>42</td><td>3,745.90</td><td>2.22</td></tr>
-      <tr class="hint-row"><td colspan="8">数据来源：店铺后台「数据明细」导出 · 点击可放大查看</td></tr>
+      <tr class="hint-row"><td colspan="8">数据来源：店铺后台「数据明细」导出</td></tr>
     </tbody>
   </table>
-</div>
+</template>
 
-<div class="data-modal-overlay" id="dataModalOverlay">
-  <div class="data-modal">
-    <div class="data-modal-close" id="dataModalClose">✕</div>
-    <table class="data-table">
-      <caption>数据明细 · 近 6 日（非K播口径）</caption>
-      <thead><tr><th>日期</th><th>总消费</th><th>电商推广总消耗</th><th>标准投消费</th><th>简单投消费</th><th>支付订单量</th><th>支付金额</th><th>投入产出比</th></tr></thead>
-      <tbody>
-        <tr><td>合计 6 条记录</td><td>6,906.95</td><td>6,906.95</td><td>6,906.95</td><td>0.00</td><td>136</td><td>12,326.20</td><td>1.78</td></tr>
-        <tr><td>2026-07-21</td><td>712.50</td><td>712.50</td><td>712.50</td><td>0.00</td><td>5</td><td>768.00</td><td>1.08</td></tr>
-        <tr><td>2026-07-22</td><td>898.23</td><td>898.23</td><td>898.23</td><td>0.00</td><td>16</td><td>1,559.00</td><td>1.74</td></tr>
-        <tr><td>2026-07-23</td><td>1,461.70</td><td>1,461.70</td><td>1,461.70</td><td>0.00</td><td>19</td><td>1,841.00</td><td>1.26</td></tr>
-        <tr><td>2026-07-24</td><td>677.51</td><td>677.51</td><td>677.51</td><td>0.00</td><td>21</td><td>1,342.30</td><td>1.98</td></tr>
-        <tr><td>2026-07-25</td><td>1,468.33</td><td>1,468.33</td><td>1,468.33</td><td>0.00</td><td>33</td><td>3,070.00</td><td>2.09</td></tr>
-        <tr><td>2026-07-26</td><td>1,688.68</td><td>1,688.68</td><td>1,688.68</td><td>0.00</td><td>42</td><td>3,745.90</td><td>2.22</td></tr>
-        <tr class="hint-row"><td colspan="8">数据来源：店铺后台「数据明细」导出</td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+<template id="tpl-kpi-roi">
+  <table class="data-table">
+    <caption>数据明细 · 近 7 日（非K播口径）</caption>
+    <thead><tr><th>日期</th><th>总消费</th><th>电商推广总消耗(本店铺)</th><th>标准投消费(本店铺)</th><th>简单投消费(本店铺)</th><th>店铺总支付订单量(非K播)</th><th>店铺总支付金额(非K播)</th><th>店铺总投入产出比(非K播)</th></tr></thead>
+    <tbody>
+      <tr><td>合计 7 条记录</td><td>4,221.63</td><td>4,221.63</td><td>4,221.63</td><td>0.00</td><td>95</td><td>9,100.18</td><td>2.16</td></tr>
+      <tr><td>2026-07-27</td><td>906.81</td><td>906.81</td><td>906.81</td><td>0.00</td><td>12</td><td>1,287.00</td><td>1.42</td></tr>
+      <tr><td>2026-07-28</td><td>432.08</td><td>432.08</td><td>432.08</td><td>0.00</td><td>10</td><td>842.00</td><td>1.95</td></tr>
+      <tr><td>2026-07-29</td><td>400.70</td><td>400.70</td><td>400.70</td><td>0.00</td><td>10</td><td>917.00</td><td>2.29</td></tr>
+      <tr><td>2026-07-30</td><td>784.21</td><td>784.21</td><td>784.21</td><td>0.00</td><td>16</td><td>1,828.00</td><td>2.33</td></tr>
+      <tr><td>2026-07-31</td><td>480.98</td><td>480.98</td><td>480.98</td><td>0.00</td><td>13</td><td>1,285.00</td><td>2.67</td></tr>
+      <tr><td>2026-08-01</td><td>500.62</td><td>500.62</td><td>500.62</td><td>0.00</td><td>10</td><td>1,335.00</td><td>2.67</td></tr>
+      <tr><td>2026-08-02</td><td>716.23</td><td>716.23</td><td>716.23</td><td>0.00</td><td>24</td><td>1,606.18</td><td>2.24</td></tr>
+      <tr class="hint-row"><td colspan="8">数据来源：店铺后台「数据明细」导出</td></tr>
+    </tbody>
+  </table>
+</template>
 
 <div class="data-modal-overlay" id="refModalOverlay">
   <div class="data-modal" style="width:720px">
@@ -1335,6 +1527,17 @@ h1, h2, .h1, .h2 {
   </div>
 </div>
 
+<!-- 通用引用弹窗：点击 .detail-trigger 时，克隆对应 <template id="data-modal-target"> 的内容进这里 -->
+<div class="data-modal-overlay" id="detailModalOverlay">
+  <div class="data-modal" style="width:720px">
+    <div class="data-modal-close" id="detailModalClose">✕</div>
+    <div id="detailModalBody"></div>
+  </div>
+</div>
+
+<!-- 通用引用悬浮缩略预览：鼠标悬停 .detail-trigger 时，克隆同一个 template 内容（去掉分割线和跳转链接）跟随鼠标显示 -->
+<div class="detail-preview" id="detailPreview"><div id="detailPreviewBody"></div></div>
+
 <div class="data-modal-overlay img-modal" id="rankImgModalOverlay">
   <div class="data-modal">
     <div class="data-modal-close" id="rankImgModalClose">✕</div>
@@ -1368,19 +1571,31 @@ h1, h2, .h1, .h2 {
 </script>
 
 <script>
+// 通用 KPI 数据悬浮预览 + 点击放大：一个共享 overlay + 一个共享悬浮框，配合任意数量的
+// .kpi-data-trigger + data-modal-target="tpl-kpi-xxx" 使用。新增一张 KPI 卡片的悬浮表格，
+// 只需要加 class + data-modal-target + 一个 <template>，不要再手写第二套 overlay/JS。
 (function() {
-  var peakCard = document.getElementById('peakKpiCard');
   var dataOverlay = document.getElementById('dataModalOverlay');
   var dataClose = document.getElementById('dataModalClose');
+  var dataBody = document.getElementById('dataModalBody');
   var dataPreview = document.getElementById('kpiDataPreview');
-  if (!peakCard || !dataOverlay) return;
+  var dataPreviewBody = document.getElementById('kpiDataPreviewBody');
+  if (!dataOverlay) return;
+
+  function findTrigger(target) {
+    return target.closest ? target.closest('.kpi-data-trigger') : null;
+  }
 
   // ── 悬浮小图跟随鼠标 ──
-  if (dataPreview) {
+  if (dataPreview && dataPreviewBody) {
     document.addEventListener('mouseover', function(e) {
-      if (e.target.closest && e.target.closest('#peakKpiCard')) {
-        dataPreview.classList.add('visible');
-      }
+      var el = findTrigger(e.target);
+      if (!el) return;
+      var tpl = document.getElementById(el.getAttribute('data-modal-target'));
+      if (!tpl) return;
+      dataPreviewBody.innerHTML = '';
+      dataPreviewBody.appendChild(tpl.content.cloneNode(true));
+      dataPreview.classList.add('visible');
     });
     document.addEventListener('mousemove', function(e) {
       if (!dataPreview.classList.contains('visible')) return;
@@ -1392,19 +1607,25 @@ h1, h2, .h1, .h2 {
       dataPreview.style.top = y + 'px';
     });
     document.addEventListener('mouseout', function(e) {
-      if (!e.target.closest || !e.target.closest('#peakKpiCard')) return;
+      if (!findTrigger(e.target)) return;
       dataPreview.classList.remove('visible');
     });
     // 手机没有 mouseout，点击/触屏到其他地方也要能关闭悬浮小图
     document.addEventListener('click', function(e) {
-      if (e.target.closest && e.target.closest('#peakKpiCard')) return;
+      if (findTrigger(e.target)) return;
       dataPreview.classList.remove('visible');
     });
   }
 
   // ── 点击放大 ──
-  peakCard.addEventListener('click', function() {
+  document.addEventListener('click', function(e) {
+    var el = findTrigger(e.target);
+    if (!el) return;
+    var tpl = document.getElementById(el.getAttribute('data-modal-target'));
+    if (!tpl) return;
     if (dataPreview) dataPreview.classList.remove('visible');
+    dataBody.innerHTML = '';
+    dataBody.appendChild(tpl.content.cloneNode(true));
     dataOverlay.classList.add('visible');
   });
   dataOverlay.addEventListener('click', function(e) {
@@ -1503,6 +1724,76 @@ h1, h2, .h1, .h2 {
   });
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') milkteaOverlay.classList.remove('visible');
+  });
+})();
+
+// 通用引用弹窗：一个共享 overlay，配合任意数量的 .detail-trigger + <template data-modal-target> 使用，
+// 不要再为每个新引用单独手写一个 overlay（milktea/brand/conv 那几个是历史遗留，别再复制）。
+(function() {
+  var detailOverlay = document.getElementById('detailModalOverlay');
+  var detailClose = document.getElementById('detailModalClose');
+  var detailBody = document.getElementById('detailModalBody');
+  var detailPreview = document.getElementById('detailPreview');
+  var detailPreviewBody = document.getElementById('detailPreviewBody');
+  if (!detailOverlay) return;
+
+  // 悬浮内容缩略图：只克隆分割线之前的部分（标题+摘要段落），跳转链接和分割线留给点击后的完整弹窗
+  function clonePreviewContent(tpl) {
+    var frag = document.createDocumentFragment();
+    var kids = tpl.content.childNodes;
+    for (var i = 0; i < kids.length; i++) {
+      var node = kids[i];
+      if (node.nodeType === 1 && node.classList && node.classList.contains('divider')) break;
+      frag.appendChild(node.cloneNode(true));
+    }
+    return frag;
+  }
+
+  if (detailPreview && detailPreviewBody) {
+    document.addEventListener('mouseover', function(e) {
+      var el = e.target.closest ? e.target.closest('.detail-trigger') : null;
+      if (!el) return;
+      var tpl = document.getElementById(el.getAttribute('data-modal-target'));
+      if (!tpl) return;
+      detailPreviewBody.innerHTML = '';
+      detailPreviewBody.appendChild(clonePreviewContent(tpl));
+      detailPreview.classList.add('visible');
+    });
+    document.addEventListener('mousemove', function(e) {
+      if (!detailPreview.classList.contains('visible')) return;
+      var w = detailPreview.offsetWidth, h = detailPreview.offsetHeight;
+      var x = e.clientX + 18, y = e.clientY + 18;
+      if (x + w > window.innerWidth) x = e.clientX - w - 18;
+      if (y + h > window.innerHeight) y = e.clientY - h - 18;
+      detailPreview.style.left = x + 'px';
+      detailPreview.style.top = y + 'px';
+    });
+    document.addEventListener('mouseout', function(e) {
+      if (!e.target.closest || !e.target.closest('.detail-trigger')) return;
+      detailPreview.classList.remove('visible');
+    });
+  }
+
+  document.addEventListener('click', function(e) {
+    var el = e.target.closest ? e.target.closest('.detail-trigger') : null;
+    if (!el) return;
+    var targetId = el.getAttribute('data-modal-target');
+    var tpl = targetId ? document.getElementById(targetId) : null;
+    if (!tpl) return;
+    e.stopPropagation();
+    if (detailPreview) detailPreview.classList.remove('visible');
+    detailBody.innerHTML = '';
+    detailBody.appendChild(tpl.content.cloneNode(true));
+    detailOverlay.classList.add('visible');
+  });
+  detailOverlay.addEventListener('click', function() {
+    detailOverlay.classList.remove('visible');
+  });
+  if (detailClose) detailClose.addEventListener('click', function() {
+    detailOverlay.classList.remove('visible');
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') detailOverlay.classList.remove('visible');
   });
 })();
 </script>
@@ -1733,7 +2024,7 @@ h1, h2, .h1, .h2 {
   var ttbox = document.getElementById('ttbox');
   document.addEventListener('mouseover', function(e) {
     var el = e.target.closest ? e.target.closest('.tooltip-word') : null;
-    if (!el) return;
+    if (!el || el.classList.contains('detail-trigger')) return;
     ttbox.textContent = el.getAttribute('data-tip');
     ttbox.classList.add('visible');
   });
@@ -1756,7 +2047,7 @@ h1, h2, .h1, .h2 {
     var el = e.target.closest ? e.target.closest('.tooltip-word') : null;
     var isPlain = el && !el.classList.contains('ref-framework-trigger') &&
       !el.classList.contains('brand-theory-trigger') && !el.classList.contains('conv-rate-trigger') &&
-      !el.classList.contains('milktea-data-trigger');
+      !el.classList.contains('milktea-data-trigger') && !el.classList.contains('detail-trigger');
     if (!isPlain) {
       ttbox.classList.remove('visible');
       ttboxActiveEl = null;
