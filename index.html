@@ -8,6 +8,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
 <style>
 
+/* 数字专用字体：Montserrat 可变字体，只子集化了数字/百分号/货币符号等会跟数字一起出现
+   的字符（子集后 15KB），塞进每个字体栈的最前面。因为子集里完全没有中文/其他英文字母
+   字形，浏览器逐字符找字形时，中文和其他英文文字会自动跳过它、落回后面的字体——不会
+   影响任何非数字文字，只有数字本身会悄悄换成这个字体。 */
+@font-face {
+  font-family: 'MontserratNum';
+  src: url('assets/fonts/montserrat-num.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
 /* html-ppt :: base.css — reset + shared tokens + layout primitives */
 /* Default tokens. Themes in assets/themes/*.css override the :root block. */
 :root {
@@ -33,9 +44,9 @@
   --radius-lg: 26px;
   --shadow: 0 10px 30px rgba(18,24,40,.08), 0 2px 6px rgba(18,24,40,.04);
   --shadow-lg: 0 24px 60px rgba(18,24,40,.14), 0 6px 16px rgba(18,24,40,.06);
-  --font-sans: 'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;
-  --font-serif: 'Playfair Display','Noto Serif SC',Georgia,serif;
-  --font-mono: 'JetBrains Mono','IBM Plex Mono',SFMono-Regular,Menlo,monospace;
+  --font-sans: 'MontserratNum','Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;
+  --font-serif: 'MontserratNum','Playfair Display','Noto Serif SC',Georgia,serif;
+  --font-mono: 'MontserratNum','JetBrains Mono','IBM Plex Mono',SFMono-Regular,Menlo,monospace;
   --font-display: var(--font-sans);
   --letter-tight: -.03em;
   --letter-normal: -.01em;
@@ -66,18 +77,29 @@ code,kbd,pre,samp{font-family:var(--font-mono)}
 }
 .slide.is-active{opacity:1;pointer-events:auto;transform:translateX(0);z-index:2}
 .slide.is-prev{transform:translateX(-30px)}
+/* flex 子项默认 min-width:auto，即不允许被压窄到比自身内容更小；桌面端"矮页面整体放大
+   撑满"和手机端的缩放算法一样，都需要先把 .slide-fit 压窄再 transform:scale() 放大回满屏，
+   没有这条会导致该放大的页面放大不了。原来只在 @media(max-width:600px) 里加了这条，
+   现在桌面端也用到同一套算法，所以提到不分屏宽的基础规则里。 */
+.slide-fit{min-width:0}
+/* .center 幻灯片（结语页）自带 align-items:center 做横向居中，但缩放算法要求 .slide-fit
+   横向贴左（配合 transform-origin:left center），两者一冲突内容框就会偏右——手机端
+   （@media max-width:600px）早就用 align-items:stretch 盖掉过这个问题，但只写在那条
+   媒体查询里，桌面端一直没补，所以结语页在桌面端才没有真正居中。横向居中改靠 .tc 的
+   text-align:center 实现，不需要 flex 层面的居中，跟原来视觉效果一致。 */
+.slide.center{align-items:stretch}
 
 /* single-page standalone (used when a layout file is opened directly) */
 body.single .slide{position:relative;width:100vw;height:100vh;opacity:1;transform:none;pointer-events:auto}
 
 /* ================= TYPOGRAPHY ================= */
 .eyebrow{font-size:13px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--text-3)}
-.kicker{font-size:14px;font-weight:600;color:var(--accent);letter-spacing:.08em;text-transform:uppercase}
-h1.title,.h1{font-family:var(--font-display);font-size:72px;line-height:1.05;font-weight:800;letter-spacing:var(--letter-tight);margin:0 0 18px;color:var(--text-1)}
-h2.title,.h2{font-family:var(--font-display);font-size:54px;line-height:1.1;font-weight:700;letter-spacing:var(--letter-tight);margin:0 0 14px}
-h3,.h3{font-size:32px;line-height:1.2;font-weight:600;letter-spacing:var(--letter-normal);margin:0 0 10px}
-h4,.h4{font-size:22px;line-height:1.3;font-weight:600;margin:0 0 8px}
-.lede{font-size:22px;line-height:1.55;color:var(--text-2);font-weight:300;max-width:62ch}
+.kicker{font-size:clamp(14px,calc(11px + .22vw),17px);font-weight:600;color:var(--accent);letter-spacing:.08em;text-transform:uppercase}
+h1.title,.h1{font-family:var(--font-display);font-size:clamp(72px,calc(50px + 1.7vw),94px);line-height:1.05;font-weight:800;letter-spacing:var(--letter-tight);margin:0 0 18px;color:var(--text-1)}
+h2.title,.h2{font-family:var(--font-display);font-size:clamp(54px,calc(38px + 1.27vw),70px);line-height:1.1;font-weight:700;letter-spacing:var(--letter-tight);margin:0 0 14px}
+h3,.h3{font-size:clamp(32px,calc(22px + .75vw),42px);line-height:1.2;font-weight:600;letter-spacing:var(--letter-normal);margin:0 0 10px}
+h4,.h4{font-size:clamp(22px,calc(15px + .52vw),29px);line-height:1.3;font-weight:600;margin:0 0 8px}
+.lede{font-size:clamp(22px,calc(18px + .34vw),26px);line-height:1.55;color:var(--text-2);font-weight:300;max-width:62ch}
 .dim{color:var(--text-2)}
 .dim2{color:var(--text-3)}
 .mono{font-family:var(--font-mono)}
@@ -142,7 +164,7 @@ h4,.h4{font-size:22px;line-height:1.3;font-weight:600;margin:0 0 8px}
   transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
 .pinned-thumb img{display:block;width:100%;border-radius:calc(var(--radius) - 3px)}
 .pinned-thumb:hover{transform:scale(1.12) translateY(-2px);box-shadow:0 28px 60px rgba(18,24,40,.22)}
-@media (max-width:600px){.pinned-thumb{position:static;width:100%;margin:16px 0 0;top:auto;right:auto}
+@media (max-width:600px){.pinned-thumb{width:78px;top:44px;right:16px;padding:3px}
   .pinned-thumb:hover{transform:none}}
 
 /* ================= PRESENTER / OVERVIEW ================= */
@@ -190,9 +212,9 @@ h4,.h4{font-size:22px;line-height:1.3;font-weight:600;margin:0 0 8px}
   --radius:4px;--radius-sm:2px;--radius-lg:8px;
   --shadow:0 2px 12px rgba(40,28,18,.06);
   --shadow-lg:0 20px 50px rgba(40,28,18,.14);
-  --font-sans:'PingFang SC','Noto Sans SC','Microsoft YaHei',sans-serif;
-  --font-display:'Playfair Display','Noto Serif SC',serif;
-  --font-serif:'Playfair Display','Noto Serif SC',serif;
+  --font-sans:'MontserratNum','PingFang SC','Noto Sans SC','Microsoft YaHei',sans-serif;
+  --font-display:'MontserratNum','Playfair Display','Noto Serif SC',serif;
+  --font-serif:'MontserratNum','Playfair Display','Noto Serif SC',serif;
   --letter-tight:-.02em;
 }
 .h1,.h2,h1.title,h2.title{font-style:italic;font-weight:600}
@@ -430,7 +452,7 @@ h4,.h4{font-size:22px;line-height:1.3;font-weight:600;margin:0 0 8px}
 .cover-date { font-size: 12px; color: var(--text-3); letter-spacing: .12em; text-transform: uppercase; margin-top: 80px; }
 .kpi-card { background: var(--surface); border: 1px solid var(--border); border-top: 3px solid var(--border-strong); padding: 28px 24px; border-radius: var(--radius); }
 .kpi-card .label { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-3); margin-bottom: 10px; }
-.kpi-card .value { font-family: var(--font-sans); font-size: 48px; font-weight: 700; color: var(--text-1); line-height: 1; }
+.kpi-card .value { font-family: var(--font-sans); font-size: clamp(48px, calc(34px + 1.13vw), 62px); font-weight: 700; color: var(--text-1); line-height: 1; }
 .kpi-card .note { font-size: 13px; color: var(--text-2); margin-top: 8px; }
 .kpi-card.highlight { border-top-color: var(--accent); }
 .kpi-card.highlight .value { color: var(--accent); }
@@ -448,9 +470,9 @@ h4,.h4{font-size:22px;line-height:1.3;font-weight:600;margin:0 0 8px}
 .color-bar-fill { height: 100%; background: var(--accent); border-radius: 3px; }
 .color-label { font-size: 14px; color: var(--text-1); min-width: 80px; }
 .color-pct { font-family: var(--font-sans); font-size: 18px; color: var(--text-1); min-width: 48px; text-align: right; }
-.pull-quote { border-left: 3px solid var(--accent); padding: 16px 24px; font-family: var(--font-serif); font-size: 20px; line-height: 1.5; color: var(--text-1); background: var(--surface-2); border-radius: 0 var(--radius) var(--radius) 0; margin: 24px 0; }
+.pull-quote { border-left: 3px solid var(--accent); padding: 16px 24px; font-family: var(--font-serif); font-size: clamp(20px, calc(16px + .31vw), 24px); line-height: 1.5; color: var(--text-1); background: var(--surface-2); border-radius: 0 var(--radius) var(--radius) 0; margin: 24px 0; }
 .data-placeholder { display: inline-block; background: color-mix(in srgb, var(--accent) 10%, transparent); border: 1px dashed var(--accent); color: var(--accent); padding: 2px 10px; border-radius: 2px; font-size: 13px; font-style: normal; font-family: var(--font-sans); }
-.closing-word { font-family: var(--font-sans); font-size: 96px; font-style: italic; font-weight: 700; color: var(--text-1); line-height: 1; letter-spacing: -.03em; }
+.closing-word { font-family: var(--font-sans); font-size: clamp(96px, calc(67px + 2.25vw), 125px); font-style: italic; font-weight: 700; color: var(--text-1); line-height: 1; letter-spacing: -.03em; }
 
 /* ── 千帆四榜卡片 ── */
 .rank-card { padding: 18px 20px; }
@@ -482,7 +504,7 @@ h4,.h4{font-size:22px;line-height:1.3;font-weight:600;margin:0 0 8px}
 
 /* WeChat Sans 全局覆盖 — 除标题外所有文字 */
 :root {
-  --font-sans: 'WeChat sans', 'PingFang SC', 'Noto Sans SC', sans-serif;
+  --font-sans: 'MontserratNum', 'WeChat sans', 'PingFang SC', 'Noto Sans SC', sans-serif;
 }
 /* 强制所有非标题元素用无衬线字体 */
 body, p, span, div, li, td, th, label, button,
@@ -496,20 +518,20 @@ body, p, span, div, li, td, th, label, button,
 .pill, .tag, .now-badge,
 .data-placeholder, .tooltip-box,
 .closing-word {
-  font-family: 'WeChat sans', 'PingFang SC', 'Noto Sans SC', sans-serif !important;
+  font-family: 'MontserratNum', 'WeChat sans', 'PingFang SC', 'Noto Sans SC', sans-serif !important;
   font-style: normal !important;
 }
 /* 只有 h1 h2 保持衬线标题字体 */
 h1, h2, .h1, .h2 {
-  font-family: 'Playfair Display', 'Noto Serif SC', Georgia, serif !important;
+  font-family: 'MontserratNum', 'Playfair Display', 'Noto Serif SC', Georgia, serif !important;
 }
 /* KPI 卡片数值使用大标题字体 */
 .kpi-card .value.value-serif {
-  font-family: 'Playfair Display', 'Noto Serif SC', Georgia, serif !important;
+  font-family: 'MontserratNum', 'Playfair Display', 'Noto Serif SC', Georgia, serif !important;
 }
 /* 收尾页大字使用大标题衬线字体 */
 .closing-word.closing-serif {
-  font-family: 'Playfair Display', 'Noto Serif SC', Georgia, serif !important;
+  font-family: 'MontserratNum', 'Playfair Display', 'Noto Serif SC', Georgia, serif !important;
 }
 /* 字号整体放大 */
 .slide p { font-size: 15px; }
@@ -857,7 +879,7 @@ h1, h2, .h1, .h2 {
 <section class="slide" data-title="市场节点">
   <div class="deck-header"><span>SLÉMON · 小红书个人阶段总结思考</span><span>市场节点</span></div>
   <p class="kicker">04 · 小红书里程碑 未来展望</p>
-  <h2 class="h2" style="font-size:34px">小红书阶段性里程碑，<br>单日最高 45 单。</h2>
+  <h2 class="h2" style="font-size:clamp(34px, calc(24px + .8vw), 44px)">小红书阶段性里程碑，<br>单日最高 45 单。</h2>
 
   <div class="grid g3 mt-l g3-row" style="gap:20px">
     <div class="kpi-card">
@@ -908,7 +930,7 @@ h1, h2, .h1, .h2 {
 <section class="slide" data-title="千帆榜单">
   <div class="deck-header"><span>SLÉMON · 小红书个人阶段总结思考</span><span>千帆榜单</span></div>
   <p class="kicker">04.5 · 数据佐证</p>
-  <h2 class="h2" style="font-size:34px">单日 45 单不是孤例，<br>千帆四榜同步被平台认可。</h2>
+  <h2 class="h2" style="font-size:clamp(34px, calc(24px + .8vw), 44px)">单日 45 单不是孤例，<br>千帆四榜同步被平台认可。</h2>
   <p class="dim mt-m" style="font-size:13px;line-height:1.6">阅读榜、成交榜、热卖榜、引流榜同时上榜"优秀账号"，说明起量不是单点异常，而是内容、转化、流量三端同步跑通。<span class="dim2" style="font-size:11px">数据来源：小红书千帆平台 · 2026-07-27</span></p>
 
   <div class="grid g2 mt-s" style="gap:12px">
@@ -1022,7 +1044,7 @@ h1, h2, .h1, .h2 {
 <section class="slide" data-title="市场方案观察·上">
   <div class="deck-header"><span>SLÉMON · 小红书个人阶段总结思考</span><span>我对市场方案的观察</span></div>
   <p class="kicker">05.5 · 我对市场方案的观察（上）</p>
-  <h2 class="h2" style="font-size:32px">搜索量大，不等于我能分到蛋糕。</h2>
+  <h2 class="h2" style="font-size:clamp(32px, calc(22px + .75vw), 42px)">搜索量大，不等于我能分到蛋糕。</h2>
   <p style="font-size:14px;color:var(--text-2);line-height:1.8;margin-bottom:14px">常见的判断链条是：<strong style="color:var(--text-1)">搜索量大 → 出货量大 → 潜力大 → 我们去做</strong>。这条链条断在第三步到第四步之间——一个品类成为风口后，头部品牌拿走大部分资源，跟风的新品牌只能在价格和营销上内卷，最终陷入价格战。</p>
 
   <div class="grid g2 mt-s" style="gap:16px">
@@ -1081,7 +1103,7 @@ h1, h2, .h1, .h2 {
 <section class="slide" data-title="市场方案观察·下">
   <div class="deck-header"><span>SLÉMON · 小红书个人阶段总结思考</span><span>我对市场方案的观察</span></div>
   <p class="kicker">05.5 · 我对市场方案的观察（下）</p>
-  <h2 class="h2" style="font-size:32px">正确的逻辑：从"大而全"到"小而美"。</h2>
+  <h2 class="h2" style="font-size:clamp(32px, calc(22px + .75vw), 42px)">正确的逻辑：从"大而全"到"小而美"。</h2>
 
   <div class="grid g2 mt-s" style="gap:16px">
     <div class="card" style="border-top:3px solid var(--bad)">
@@ -1135,7 +1157,7 @@ h1, h2, .h1, .h2 {
 <section class="slide" data-title="市场方案观察·数据佐证">
   <div class="deck-header"><span>SLÉMON · 小红书个人阶段总结思考</span><span>我对市场方案的观察 · 数据佐证</span></div>
   <p class="kicker">05.6 · 我对市场方案的观察（数据佐证）</p>
-  <h2 class="h2" style="font-size:30px">能突围的，从来不是"标品"，是差异化。</h2>
+  <h2 class="h2" style="font-size:clamp(30px, calc(21px + .7vw), 39px)">能突围的，从来不是"标品"，是差异化。</h2>
   <p style="font-size:13px;color:var(--text-2);line-height:1.7;margin-bottom:12px">近 30 天店铺后台真实成交数据（按支付金额排序）：头部两名都是<strong style="color:var(--text-1)">有特殊工艺/配色的差异化鞋款</strong>，而不是主观定义的"好卖"基础标品。</p>
 
   <div class="pinned-thumb rank-shot-trigger" data-img="assets/rank-shots/sales-data-shot.png">
@@ -1183,7 +1205,7 @@ h1, h2, .h1, .h2 {
 <section class="slide" data-title="品牌视野">
   <div class="deck-header"><span>SLÉMON · 小红书个人阶段总结思考</span><span>品牌视野</span></div>
   <p class="kicker">06 · 品牌视野</p>
-  <h2 class="h2" style="font-size:34px">这是一次真正的二次创业。</h2>
+  <h2 class="h2" style="font-size:clamp(34px, calc(24px + .8vw), 44px)">这是一次真正的二次创业。</h2>
   <p style="font-size:13px;color:var(--text-2);font-family:var(--font-sans);line-height:1.6;margin-bottom:10px">
     仅仅30天，小红书渠道的曝光数据第一次让我们品牌触达了真正意义上的"公众"：
   </p>
@@ -1253,7 +1275,7 @@ h1, h2, .h1, .h2 {
 <section class="slide" data-title="现状思考">
   <div class="deck-header"><span>SLÉMON · 小红书个人阶段总结思考</span><span>现状与行动建议</span></div>
   <p class="kicker">07 · 回到现状思考</p>
-  <h2 class="h2" style="font-size:36px">产品力尚未就绪，<br>但方向已经清晰。</h2>
+  <h2 class="h2" style="font-size:clamp(36px, calc(25px + .84vw), 47px)">产品力尚未就绪，<br>但方向已经清晰。</h2>
 
   <div class="grid g2 mt-l" style="gap:24px;align-items:start">
     <div class="stack">
@@ -1310,7 +1332,7 @@ h1, h2, .h1, .h2 {
 <section class="slide" data-title="假设情景推演·路径">
   <div class="deck-header"><span>SLÉMON · 小红书个人阶段总结思考</span><span>假设情景推演</span></div>
   <p class="kicker">08 · 假设情景推演 What-If Scenario Analysis（上）</p>
-  <h2 class="h2" style="font-size:32px">情景假设：<br>现有路径若持续验证成立
+  <h2 class="h2" style="font-size:clamp(32px, calc(22px + .75vw), 42px)">情景假设：<br>现有路径若持续验证成立</h2>
 
   <div class="grid g3 mt-l" style="gap:24px">
     <div class="kpi-card">
@@ -1357,7 +1379,7 @@ h1, h2, .h1, .h2 {
 <section class="slide" data-title="假设情景推演·风险">
   <div class="deck-header"><span>SLÉMON · 小红书个人阶段总结思考</span><span>假设情景推演</span></div>
   <p class="kicker">08 · 假设情景推演 What-If Scenario Analysis（下）</p>
-  <h2 class="h2" style="font-size:32px">但品牌力储备的窗口期，<br>正在收窄。</h2>
+  <h2 class="h2" style="font-size:clamp(32px, calc(22px + .75vw), 42px)">但品牌力储备的窗口期，<br>正在收窄。</h2>
 
   <div class="grid g2 mt-l" style="gap:24px;align-items:start">
     <div class="card" style="border-top:3px solid var(--bad)">
@@ -1383,7 +1405,7 @@ h1, h2, .h1, .h2 {
 <section class="slide" data-title="成本结构·FACT（上）">
   <div class="deck-header"><span>SLÉMON · 小红书个人阶段总结思考</span><span>FACT</span></div>
   <p class="kicker">09 · 延伸思考 · 成本结构与打店现实（上）</p>
-  <h2 class="h2" style="font-size:32px">打店期的成本，<br>不该套老店的账本。</h2>
+  <h2 class="h2" style="font-size:clamp(32px, calc(22px + .75vw), 42px)">打店期的成本，<br>不该套老店的账本。</h2>
 
   <div class="grid g2 mt-l" style="gap:24px;align-items:start">
     <div class="card">
@@ -1422,7 +1444,7 @@ h1, h2, .h1, .h2 {
 <section class="slide" data-title="市场现实·FACT（下）">
   <div class="deck-header"><span>SLÉMON · 小红书个人阶段总结思考</span><span>FACT</span></div>
   <p class="kicker">09 · 延伸思考 · 市场现实与决策窗口（下）</p>
-  <h2 class="h2" style="font-size:32px">不管牌桌上谁是搅局者，<br>66 元已经是事实。</h2>
+  <h2 class="h2" style="font-size:clamp(32px, calc(22px + .75vw), 42px)">不管牌桌上谁是搅局者，<br>66 元已经是事实。</h2>
 
   <div class="pinned-thumb rank-shot-trigger" data-img="assets/rank-shots/henan-price-shot.png">
     <img src="assets/rank-shots/henan-price-shot.png" alt="淘宝芭蕾体服搜索结果价格截图">
@@ -2002,7 +2024,11 @@ h1, h2, .h1, .h2 {
     fit.className = 'slide-fit';
     var kids = Array.prototype.slice.call(s.children);
     kids.forEach(function(child) {
-      if (child.classList.contains('deck-header') || child.classList.contains('deck-footer')) return;
+      // .pinned-thumb 靠 position:absolute 相对整个 .slide 钉在固定角落；一旦被扫进
+      // .slide-fit，只要这层被加上 transform:scale()，就会变成新的定位容器（CSS 规范：
+      // 有 transform 的元素会成为内部绝对定位后代的新基准），悬浮图会跟着内容一起被
+      // 缩放挪位，而不是保持钉在整页固定的角落——所以要跟 header/footer 一样排除掉。
+      if (child.classList.contains('deck-header') || child.classList.contains('deck-footer') || child.classList.contains('pinned-thumb')) return;
       fit.appendChild(child);
     });
     s.appendChild(fit);
@@ -2023,42 +2049,84 @@ h1, h2, .h1, .h2 {
 
   function fitSlides() {
     slides.forEach(function(s) {
-      if (!isMobile()) {
-        unwrapSlideFit(s);
+      var mobile = isMobile();
+      var cs = getComputedStyle(s);
+      var avail = s.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+      var naturalCheck = wrapSlideFit(s);
+      naturalCheck.style.width = '';
+      naturalCheck.style.removeProperty('transform');
+      var natural = naturalCheck.scrollHeight;
+
+      // 窄屏（一屏一页 + scroll-snap）：内容无论比一屏高还是矮，都强制缩放到贴合
+      // 一屏，翻页体验才是"划一下正好一页"。宽屏桌面：内容明显比一屏矮时整体放大撑满
+      // （比如两张卡片的观察页）；内容溢出一屏时必须缩小——哪怕桌面排版本来是精心摆好
+      // 的，字号用 clamp() 在大显示器上变大之后，原本刚好够用的页面也可能被顶出一屏，
+      // .slide 是 overflow:hidden，不缩小就是直接裁字，比缩小带来的连锁问题严重得多。
+      // 只有"高度已经跟一屏基本吻合"（既不矮也不溢出）的页面才保持原样不缩放。
+      var overflowing = natural > avail + 2;
+      // 桌面端"太矮"的判定门槛比之前收紧（0.92 → 0.78）：只有明显空旷的页面才出手放大，
+      // 差不多快满一屏的页面直接维持原状，不再硬凑到贴边——满打满算反而显得局促，
+      // 留一点呼吸感比"刚好塞满"更好看。
+      var tooShort = natural < avail * (mobile ? 0.92 : 0.78);
+      var shouldFit = mobile
+        ? (avail > 0 && natural > 0 && Math.abs(natural - avail) > 2)
+        : (avail > 0 && natural > 0 && (overflowing || tooShort));
+
+      if (!shouldFit) {
+        if (!mobile) unwrapSlideFit(s);
         s.style.removeProperty('overflow-y');
         return;
       }
       var fit = wrapSlideFit(s);
-      fit.style.width = '';
-      fit.style.removeProperty('transform');
       s.style.removeProperty('overflow-y');
-      var cs = getComputedStyle(s);
-      var avail = s.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
-      var natural = fit.scrollHeight;
-      // 之前只在 natural > avail 时才缩小，内容比一屏矮的页面（5/7/8/9/10 这几页在起
-      // 始状态下经常是这种情况）就完全不处理，字号一直停留在原始大小，视觉上一屏里
-      // 大片留白、字看着偏小——即"字体不会自动放大"。现在改成不管内容比屏幕高还是矮，
-      // 都按 avail/natural 的比例把整页缩放到接近正好塞满一屏；只留一个放大上限，
-      // 防止内容特别短的页面（比如结语页那种一两行字）被拉得过大变形。
-      if (avail > 0 && natural > 0 && Math.abs(natural - avail) > 2) {
-        // 单次算出来的 scale 不可靠：为了把内容缩放到贴合一屏，会把 .slide-fit 的
-        // width 往上调（变宽去缩小 / 变窄去放大），而宽度一变，里面的文字/网格就会
-        // 重新换行，实际高度跟着变，跟最初那次（width 还没动过）量出来的 natural 就对
-        // 不上了——比如第五页就是缩得不够多，底下空出一截，看着"没填满"。
-        // 现在按算出来的 scale 先套上去，再用套上去之后的真实高度重新校正几轮，
-        // 直到宽度和缩放互相自洽为止。
-        var scale = avail / natural;
-        var maxUpscale = 1.35;
-        for (var iter = 0; iter < 5; iter++) {
-          var capped = Math.min(scale, maxUpscale);
-          fit.style.width = (100 / capped) + '%';
-          fit.style.transformOrigin = 'top left';
-          fit.style.setProperty('transform', 'scale(' + capped + ')', 'important');
-          var actualNatural = fit.scrollHeight;
-          if (Math.abs(actualNatural - avail) <= 2) break;
-          var nextScale = avail / actualNatural;
-          if (Math.abs(nextScale - scale) < 0.002) { scale = nextScale; break; }
-          scale = nextScale;
+      // 桌面端刻意不去动 justify-content——.slide 默认 center 是"像 PPT"的关键（上下
+      // 留白对称，不是网页/Word 那种从顶部往下堆），这条不该为了缩放算法牺牲掉。
+      // 之前裁字 bug 的真正原因不是"居中"本身，是 transform-origin 用了 top left：
+      // flexbox 按缩放前那个矮框做居中定位，框的正中心天然落在 avail 的正中心（这是
+      // 居中布局的数学性质，跟框多高无关）；用 top left 当缩放锚点，缩放只会往右下
+      // 单向张开，等于把"框的中心恰好在容器中心"这个巧合浪费掉，还平白引入了偏移。
+      // 换成以框自己的纵向中心为锚点（left center，横向仍钉在左边，跟原来一致，
+      // 因为非 .center 页面横向本来就是靠左贴边的），缩放会以 avail 中心为轴对称
+      // 向上下张开，天然贴合居中语义，最终视觉高度只要不超过 avail，就绝不会溢出，
+      // 也不需要再强改 justify-content。
+      // 单次算出来的 scale 不可靠：为了把内容缩放到贴合一屏，会把 .slide-fit 的
+      // width 往上调（变宽去缩小 / 变窄去放大），而宽度一变，里面的文字/网格就会
+      // 重新换行，实际高度跟着变，跟最初那次（width 还没动过）量出来的 natural 就对
+      // 不上了——比如第五页就是缩得不够多，底下空出一截，看着"没填满"。
+      // 现在按算出来的 scale 先套上去，再用套上去之后的真实高度重新校正几轮，
+      // 直到宽度和缩放互相自洽为止。
+      // 桌面端不追求"精确贴满 avail"——那样视觉上太满、没有呼吸感。放大撑高时只
+      // 冲到 avail 的 88%，缩小防溢出时留 3% 余量，两种情况都不会顶到边。手机端
+      // scroll-snap 翻页依赖精确贴合一屏，维持原来的 100% 目标不变。
+      var target = mobile ? avail : (overflowing ? avail * 0.97 : avail * 0.88);
+      var scale = target / natural;
+      var maxUpscale = mobile ? 1.35 : 1.25;
+      var capped, actualNatural;
+      for (var iter = 0; iter < 5; iter++) {
+        capped = Math.min(scale, maxUpscale);
+        fit.style.width = (100 / capped) + '%';
+        fit.style.transformOrigin = mobile ? 'top left' : 'left center';
+        fit.style.setProperty('transform', 'scale(' + capped + ')', 'important');
+        actualNatural = fit.scrollHeight;
+        if (Math.abs(actualNatural - target) <= 2) break;
+        var nextScale = target / actualNatural;
+        if (Math.abs(nextScale - scale) < 0.002) { scale = nextScale; break; }
+        scale = nextScale;
+      }
+      // 安全兜底：多栏内容（比如"图表 | 大段文字"）收窄后各栏换行增高的幅度天差地别，
+      // 5 轮以内不一定能收敛，万一最终视觉高度还是超过一屏——如果这页本来就是要防止
+      // 溢出（overflowing）或者是手机端（离不开这套机制），必须直接补一刀强制缩小到底，
+      // 绝不能放着不管，那样等于没做，字照样被裁；如果这页本来是想放大撑满、结果放大
+      // 过头了才溢出，安全起见整体撤销缩放，宁可保留原来的空白也不能裁字。
+      if (actualNatural * capped > avail + 2) {
+        if (!mobile && !overflowing) {
+          fit.style.width = '';
+          fit.style.removeProperty('transform');
+          unwrapSlideFit(s);
+        } else {
+          var safeCapped = avail / actualNatural;
+          fit.style.width = (100 / safeCapped) + '%';
+          fit.style.setProperty('transform', 'scale(' + safeCapped + ')', 'important');
         }
       }
       if (ro) { Array.prototype.forEach.call(fit.children, function(child) { ro.observe(child); }); }
